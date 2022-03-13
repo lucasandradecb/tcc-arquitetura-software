@@ -1,0 +1,37 @@
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Gsl.Info.Cadastrais.Application.Models;
+using Gsl.Info.Cadastrais.Domain.Entities;
+
+namespace Gsl.Info.Cadastrais.Application.Interfaces
+{
+    /// <summary>
+    /// Interface de ClienteApplication
+    /// </summary>
+    public interface IClienteApplication
+    {
+        /// <summary>
+        /// Obtém a lista de todos os clientes
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<List<ClienteModel>>> ListarTodos(CancellationToken ctx);
+
+        /// <summary>
+        /// Obtem dados de um cliente
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<ClienteModel>> ObterCliente(string cpf, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza o cadastro de um cliente
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Cliente>> CadastrarCliente(ClienteModel clienteModel, CancellationToken ctx);
+    }
+}
