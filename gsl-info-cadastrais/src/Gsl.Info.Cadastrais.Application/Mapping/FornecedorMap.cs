@@ -16,12 +16,13 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
         public FornecedorMap()
         {
             CreateMap<Fornecedor, FornecedorModel>()
-                .ForMember(dest => dest.Localizacao, m => m.MapFrom(src => src.Localizacao))
+                .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
+                .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.MapFrom(src => src.Endereco))                
                 .ForMember(dest => dest.Cnpj, m => m.MapFrom(src => src.Cnpj))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome));
 
-            CreateMap<EnderecoCompleto, FornecedorModel.DadosEndereco>()
+            CreateMap<EnderecoCompleto, FornecedorModel.DadosEnderecoFornecedor>()
                 .ForMember(dest => dest.Cep, m => m.MapFrom(src => src.Cep))
                 .ForMember(dest => dest.Cidade, m => m.MapFrom(src => src.Cidade))
                 .ForMember(dest => dest.Complemento, m => m.MapFrom(src => src.Complemento))
@@ -30,13 +31,9 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                 .ForMember(dest => dest.Numero, m => m.MapFrom(src => src.Numero))
                 .ReverseMap();
 
-            CreateMap<LocalizacaoCompleta, FornecedorModel.DadosLocalizacao>()
-               .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
-               .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
-               .ReverseMap();
-
             CreateMap<FornecedorModel, Fornecedor>()
-                .ForMember(dest => dest.Localizacao, m => m.Ignore())
+                .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
+                .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.Ignore())
                 .ForMember(dest => dest.Cnpj, m => m.MapFrom(src => src.Cnpj))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome))
@@ -45,7 +42,8 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                         src.Nome,
                         src.Cnpj,
                         new EnderecoCompleto(src.Endereco.Cep, src.Endereco.Logradouro, src.Endereco.Numero, src.Endereco.Complemento, src.Endereco.Cidade, src.Endereco.Estado),
-                        new LocalizacaoCompleta(src.Localizacao.Latitude, src.Localizacao.Longitude)
+                        src.Latitude,
+                        src.Longitude
                     ));
         }
     }

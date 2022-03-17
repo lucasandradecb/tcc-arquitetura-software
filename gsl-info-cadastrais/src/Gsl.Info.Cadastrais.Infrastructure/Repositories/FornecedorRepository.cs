@@ -39,7 +39,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         /// </summary>
         /// <param name="cpf"></param>
         /// <returns></returns>
-        public static string ObterChave(string cpf) => $"fornecedor:{cpf}";
+        public static string ObterChave(string cnpj) => $"fornecedor:{cnpj}";
 
         /// <summary>
         /// Armazena o cliente no banco de dados

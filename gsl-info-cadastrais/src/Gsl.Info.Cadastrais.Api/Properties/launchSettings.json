@@ -11,27 +11,28 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "RETURN_DEFAULT_EXCEPTION": "false",
+        "REDIS_ALLOWADMIN": "true",
         "REDIS_HOST": "localhost",
         "REDIS_PORT": "6379",
         "REDIS_DATABASE": "0",
-        "REDIS_ALLOWADMIN": "true",
-        "REDIS_PASSWORD": "string.Empty"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "REDIS_PASSWORD": "string.Empty",
+        "RETURN_DEFAULT_EXCEPTION": "false"
       }
     },
     "Gsl.Info.Cadastrais.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "RETURN_DEFAULT_EXCEPTION": "false",
+        "REDIS_ALLOWADMIN": "true",
         "REDIS_HOST": "localhost",
         "REDIS_PORT": "6379",
         "REDIS_DATABASE": "0",
-        "REDIS_ALLOWADMIN": "true",
-        "REDIS_PASSWORD": "string.Empty"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "REDIS_PASSWORD": "string.Empty",
+        "RETURN_DEFAULT_EXCEPTION": "false"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

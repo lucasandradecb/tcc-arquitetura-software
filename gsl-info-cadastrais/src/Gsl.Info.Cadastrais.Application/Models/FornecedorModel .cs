@@ -19,16 +19,20 @@ namespace Gsl.Info.Cadastrais.Application.Models
         /// <summary>
         /// Dados do endereço do fornecedor
         /// </summary>
-        public DadosEndereco Endereco { get; set; }
+        public DadosEnderecoFornecedor Endereco { get; set; }
         /// <summary>
-        /// Dados de localização do fornecedor
+        /// Latitude
         /// </summary>
-        public DadosLocalizacao Localizacao { get; set; }
+        public string Latitude { get; set; }
+        /// <summary>
+        /// Longitude
+        /// </summary>
+        public string Longitude { get; set; }
 
         /// <summary>
         /// Dados de endereco
         /// </summary>
-        public class DadosEndereco
+        public class DadosEnderecoFornecedor
         {
              /// <summary>
              /// CEP do endereço
@@ -54,21 +58,6 @@ namespace Gsl.Info.Cadastrais.Application.Models
             /// Nome do Estado
             /// </summary>
             public string Estado { get; set; }        
-        }
-
-        /// <summary>
-        /// Dados de localização
-        /// </summary>
-        public class DadosLocalizacao
-        {
-            /// <summary>
-            /// Latitude
-            /// </summary>
-            public string Latitude { get; set; }
-            /// <summary>
-            /// Longitude
-            /// </summary>
-            public string Longitude { get; set; }           
         }
     }
 }

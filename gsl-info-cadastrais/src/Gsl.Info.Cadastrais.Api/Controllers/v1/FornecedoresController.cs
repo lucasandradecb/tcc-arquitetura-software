@@ -53,46 +53,46 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
             return NoContent();
         }
 
-        ///// <summary>
-        ///// Obtem os dados do fornecedor
-        ///// </summary>
-        ///// <param name="cnpj"></param>
-        ///// <param name="ctx"></param>
-        ///// <returns></returns>
-        //[HttpGet("{cnpj}")]
-        //[ProducesResponseType(typeof(FornecedorModel), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> ObterFornecedor([FromQuery, Required] string cnpj, CancellationToken ctx)
-        //{
-        //    var result = await _fornecedorApplication.ObterFornecedor(cnpj, ctx);
+        /// <summary>
+        /// Obtem os dados do fornecedor
+        /// </summary>
+        /// <param name="cnpj"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpGet("{cnpj}")]
+        [ProducesResponseType(typeof(FornecedorModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObterFornecedor([FromRoute, Required] string cnpj, CancellationToken ctx)
+        {
+            var result = await _fornecedorApplication.ObterFornecedor(cnpj, ctx);
 
-        //    if (result.Valid)
-        //        return Ok(result.Object);
+            if (result.Valid)
+                return Ok(result.Object);
 
-        //    return UnprocessableEntity(result.Notifications);
-        //}
+            return UnprocessableEntity(result.Notifications);
+        }
 
-        ///// <summary>
-        ///// Realiza o cadastro de um fornecedor
-        ///// </summary>
-        ///// <param name="fornecedorModel"></param>
-        ///// <param name="ctx"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[ProducesResponseType(typeof(Fornecedor), StatusCodes.Status201Created)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> CadastrarFornecedor(FornecedorModel fornecedorModel, CancellationToken ctx)
-        //{
-        //    var result = await _fornecedorApplication.CadastrarFornecedor(fornecedorModel, ctx);
+        /// <summary>
+        /// Realiza o cadastro de um fornecedor
+        /// </summary>
+        /// <param name="fornecedorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(Fornecedor), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CadastrarFornecedor(FornecedorModel fornecedorModel, CancellationToken ctx)
+        {
+            var result = await _fornecedorApplication.CadastrarFornecedor(fornecedorModel, ctx);
 
-        //    if (result.Valid)
-        //        return Created("/fornecedores", result.Object);
+            if (result.Valid)
+                return Created("/fornecedores", result.Object);
 
-        //    return UnprocessableEntity(result.Notifications);
-        //}
+            return UnprocessableEntity(result.Notifications);
+        }
     }
 }

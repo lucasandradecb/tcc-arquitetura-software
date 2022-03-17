@@ -21,13 +21,15 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// <param name="nome"></param>
         /// <param name="cnpj"></param>        
         /// <param name="endereco"></param>
-        /// <param name="localizacao"></param>
-        public Fornecedor(string nome, string cnpj, EnderecoCompleto endereco, LocalizacaoCompleta localizacao)
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        public Fornecedor(string nome, string cnpj, EnderecoCompleto endereco, string latitude, string longitude)
         {
             Nome = nome;
             Cnpj = cnpj;
             Endereco = endereco;
-            Localizacao = localizacao;
+            Latitude = latitude;
+            Longitude = longitude;
             DataCriacao = DateTime.UtcNow;            
 
             AddNotifications(new Contract()
@@ -35,7 +37,8 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
                 .IsNotNull(Nome, nameof(Nome), "Nome não pode ser nulo")
                 .IsNotNull(Cnpj, nameof(Cnpj), "Cnpj não pode ser nulo")
                 .IsNotNull(Endereco, nameof(Endereco), "Endereço não pode ser nulo")
-                .IsNotNull(Localizacao, nameof(Localizacao), "Localização não pode ser nula"));
+                .IsNotNull(Latitude, nameof(Latitude), "Latitude não pode ser nula")
+                .IsNotNull(Longitude, nameof(Longitude), "Longitude não pode ser nula"));
         }
 
         /// <summary>
@@ -51,9 +54,13 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// </summary>
         public EnderecoCompleto Endereco { get; set; }
         /// <summary>
-        /// Dados de localização do fornecedor
+        /// Latitude
         /// </summary>
-        public LocalizacaoCompleta Localizacao { get; set; }
+        public string Latitude { get; set; }
+        /// <summary>
+        /// Longitude
+        /// </summary>
+        public string Longitude { get; set; }
         /// <summary>
         /// Data de criação do registro
         /// </summary>
