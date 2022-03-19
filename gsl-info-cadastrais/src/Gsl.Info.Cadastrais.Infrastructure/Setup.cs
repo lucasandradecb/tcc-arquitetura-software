@@ -20,6 +20,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IDepositoRepository, DepositoRepository>();
             services.AddScoped<IMercadoriaRepository, MercadoriaRepository>();
+            services.AddScoped<ISqlServerDbContext, SqlServerDbContext>();
 
             return services;
         }

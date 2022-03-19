@@ -7,6 +7,7 @@ using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
@@ -14,85 +15,132 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
     /// Repositório de mercadorias
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class MercadoriaRepository : RedisRepository<Mercadoria>, IMercadoriaRepository
+    public class MercadoriaRepository : IMercadoriaRepository
     {
+        #region Redis
+
         private TimeSpan REDIS_TEMPO_EXPIRACAO = new TimeSpan(10, 0, 0, 0);
 
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="config"></param>
-        public MercadoriaRepository(RedisConfiguration config) : base(config)
-        {
+        ///// <summary>
+        ///// Construtor
+        ///// </summary>
+        ///// <param name="config"></param>
+        //public MercadoriaRepository(RedisConfiguration config) : base(config)
+        //{
 
-        }
+        //}
 
         /// <summary>
         /// Cria uma chave de acesso ao redis
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(Mercadoria model) => ObterChave(model.Codigo.ToString());
+        //protected override string CreateRedisKey(Mercadoria model) => ObterChave(model.Codigo.ToString());
 
-        /// <summary>
-        /// Obtém chave de acesso do redis
-        /// </summary>
-        /// <param name="codigo"></param>
-        /// <returns></returns>
-        public static string ObterChave(string codigo) => $"mercadoria:{codigo}";
+        ///// <summary>
+        ///// Obtém chave de acesso do redis
+        ///// </summary>
+        ///// <param name="codigo"></param>
+        ///// <returns></returns>
+        //public static string ObterChave(string codigo) => $"mercadoria:{codigo}";
 
-        /// <summary>
-        /// Armazena a mercadoria no banco de dados
-        /// </summary>
-        /// <param name="mercadoria"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Armazena a mercadoria no banco de dados
+        ///// </summary>
+        ///// <param name="mercadoria"></param>
+        ///// <param name="ctx"></param>
+        ///// <returns></returns>
+        //public async Task Salvar(Mercadoria mercadoria, CancellationToken ctx)
+        //{
+        //    await Add(mercadoria, ctx, REDIS_TEMPO_EXPIRACAO);
+        //}
+
+        ///// <summary>
+        ///// Obtém a mercadoria pelo codigo
+        ///// </summary>
+        ///// <param name="codigo"></param>
+        ///// <param name="ctx"></param>
+        ///// <returns></returns>
+        //public async Task<Mercadoria> ObterPorCodigo(int codigo, CancellationToken ctx)
+        //{
+        //    return await GetByKey(ObterChave(codigo.ToString()), ctx);
+        //}
+
+        ///// <summary>
+        ///// Verifica se a mercadoria já existe no banco
+        ///// </summary>
+        ///// <param name="mercadoria"></param>
+        ///// <param name="ctx"></param>
+        ///// <returns></returns>
+        //public async Task<bool> VerificarSeExiste(Mercadoria mercadoria, CancellationToken ctx)
+        //{
+        //    var mercadoriaExistente = await ObterPorCodigo(mercadoria.Codigo, ctx);
+
+        //    return mercadoriaExistente?.Codigo == mercadoria.Codigo;
+        //}
+
+        ///// <summary>
+        ///// Obtém lista de mercadorias
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<List<Mercadoria>> ListarTodos(CancellationToken ctx)
+        //{
+        //    var listaChaves = GetServer().Keys(pattern: "mercadoria:*").ToList();
+        //    var listaMercadorias = new List<Mercadoria>();
+
+        //    foreach (var chave in listaChaves)
+        //    {
+        //        var mercadoria = await GetByKey(chave, ctx);
+        //        if (mercadoria != default)
+        //            listaMercadorias.Add(mercadoria);
+        //    }
+
+        //    return listaMercadorias;
+        //}
+        #endregion
+
+        private ISqlServerDbContext SqlServerDbContext { get; }
+
+        public MercadoriaRepository(ISqlServerDbContext sqlServerDbContext)
+        {
+            SqlServerDbContext = sqlServerDbContext;
+        }
         public async Task Salvar(Mercadoria mercadoria, CancellationToken ctx)
         {
-            await Add(mercadoria, ctx, REDIS_TEMPO_EXPIRACAO);
+            var sqlInsert =
+                @"INSERT INTO Mercadoria
+					(id,
+					codigo,
+					nome,
+					quantidade,
+					valor,
+					datacriacao)
+				VALUES 
+					(@Id,
+					@Codigo,
+					@Nome,
+					@Quantidade,
+					@Valor,
+					@DataCriacao)";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, mercadoria);
         }
 
-        /// <summary>
-        /// Obtém a mercadoria pelo codigo
-        /// </summary>
-        /// <param name="codigo"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<Mercadoria> ObterPorCodigo(int codigo, CancellationToken ctx)
+        public Task<Mercadoria> ObterPorCodigo(int codigo, CancellationToken ctx)
         {
-            return await GetByKey(ObterChave(codigo.ToString()), ctx);
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Verifica se a mercadoria já existe no banco
-        /// </summary>
-        /// <param name="mercadoria"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<bool> VerificarSeExiste(Mercadoria mercadoria, CancellationToken ctx)
+        public Task<bool> VerificarSeExiste(Mercadoria mercadoria, CancellationToken ctx)
         {
-            var mercadoriaExistente = await ObterPorCodigo(mercadoria.Codigo, ctx);
-
-            return mercadoriaExistente?.Codigo == mercadoria.Codigo;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Obtém lista de mercadorias
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Mercadoria>> ListarTodos(CancellationToken ctx)
+        public Task<List<Mercadoria>> ListarTodos(CancellationToken ctx)
         {
-            var listaChaves = GetServer().Keys(pattern: "mercadoria:*").ToList();
-            var listaMercadorias = new List<Mercadoria>();
-
-            foreach (var chave in listaChaves)
-            {
-                var mercadoria = await GetByKey(chave, ctx);
-                if (mercadoria != default)
-                    listaMercadorias.Add(mercadoria);
-            }
-
-            return listaMercadorias;
+            throw new NotImplementedException();
         }
     }    
 }
