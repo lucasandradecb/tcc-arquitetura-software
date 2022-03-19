@@ -60,16 +60,16 @@ namespace Gsl.Info.Cadastrais.Application
             if (cpfCliente.Valid)
             {
                 var cliente = await _clienteRepository.ObterPorCpf(cpfCliente.Numero, ctx);
-                if (cliente == null)
+                if (cliente != null)
                 {
-                    var notification = new List<Notification> { new Notification(nameof(Cliente), MensagensInfo.Cliente_NaoEncontrado) };
-                    return Result<ClienteModel>.Error(notification);
+                    output = _mapper.Map<Cliente, ClienteModel>(cliente);
+                    return Result<ClienteModel>.Ok(output);
                 }
-
-                output = _mapper.Map<Cliente, ClienteModel>(cliente);
             }
 
-            return Result<ClienteModel>.Ok(output);
+            var notification = new List<Notification> { new Notification(nameof(Cliente.Cpf), MensagensInfo.Cliente_NaoEncontrado) };
+            return Result<ClienteModel>.Error(notification);
+            
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace Gsl.Info.Cadastrais.Application
                     return Result<Cliente>.Ok(cliente);
                 }
 
-                cliente.AddNotification(nameof(Cliente), MensagensInfo.Cliente_CpfExistente);
+                cliente.AddNotification(nameof(Cliente.Cpf), MensagensInfo.Cliente_CpfExistente);
             }
 
             return Result<Cliente>.Error(cliente.Notifications);

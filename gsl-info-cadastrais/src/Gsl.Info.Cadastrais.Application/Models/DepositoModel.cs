@@ -1,20 +1,20 @@
 ﻿namespace Gsl.Info.Cadastrais.Application.Models
 {
     /// <summary>
-    /// Modelo de dados de fornecedor
+    /// Modelo de dados de deposito
     /// </summary>
-    public class FornecedorModel
+    public class DepositoModel
     {
         /// <summary>
-        /// Nome do fornecedor
+        /// Codigo de identificação do deposito
         /// </summary>
-        public string Nome { get; set; }
+        public int Codigo { get; set; }
         /// <summary>
-        /// Cnpj do forncedor
+        /// Nome do deposito
         /// </summary>
-        public string Cnpj { get; set; }        
+        public string Nome { get; set; }    
         /// <summary>
-        /// Dados do endereço do fornecedor
+        /// Dados do endereço do deposito
         /// </summary>
         public DadosEnderecoModel Endereco { get; set; }
         /// <summary>

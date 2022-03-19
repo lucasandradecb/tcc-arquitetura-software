@@ -77,7 +77,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         }
         
         /// <summary>
-        /// Obtém lista de veiculos
+        /// Obtém lista de clientes
         /// </summary>
         /// <returns></returns>
         public async Task<List<Cliente>> ListarTodos(CancellationToken ctx)

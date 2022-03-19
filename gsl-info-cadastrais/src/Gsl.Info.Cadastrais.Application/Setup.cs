@@ -17,6 +17,8 @@ namespace Gsl.Info.Cadastrais.Application
         {
             services.AddScoped<IClienteApplication, ClienteApplication>();
             services.AddScoped<IFornecedorApplication, FornecedorApplication>();
+            services.AddScoped<IDepositoApplication, DepositoApplication>();
+            services.AddScoped<IMercadoriaApplication, MercadoriaApplication>();
 
             services.AddScoped<IUsuarioApplication, UsuarioApplication>();
             services.AddScoped<IVeiculoApplication, VeiculoApplication>();

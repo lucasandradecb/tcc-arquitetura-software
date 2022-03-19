@@ -97,6 +97,24 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe um depósito cadastrado com o código informado..
+        /// </summary>
+        public static string Deposito_CodigoExiste {
+            get {
+                return ResourceManager.GetString("Deposito_CodigoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi encontrado um depósito com o código informado!.
+        /// </summary>
+        public static string Deposito_NaoEncontrado {
+            get {
+                return ResourceManager.GetString("Deposito_NaoEncontrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe um fornecedor cadastrado com o CNPJ informado..
         /// </summary>
         public static string Fornecedor_CpnjExiste {
@@ -120,6 +138,24 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         public static string MarcaVeiculo_CodigoExistente {
             get {
                 return ResourceManager.GetString("MarcaVeiculo_CodigoExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe uma mercadoria cadastrada com o código informado..
+        /// </summary>
+        public static string Mercadoria_CodigoExiste {
+            get {
+                return ResourceManager.GetString("Mercadoria_CodigoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi encontrada uma mercadoria com o código informado!.
+        /// </summary>
+        public static string Mercadoria_NaoEncontrada {
+            get {
+                return ResourceManager.GetString("Mercadoria_NaoEncontrada", resourceCulture);
             }
         }
         

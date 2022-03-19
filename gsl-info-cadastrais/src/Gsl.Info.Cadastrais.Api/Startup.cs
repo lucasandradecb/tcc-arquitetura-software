@@ -47,7 +47,10 @@ namespace Gsl.Info.Cadastrais.Api
 
             services.AddAutoMapper(typeof(UsuarioApplication));
             services.AddAutoMapper(typeof(VeiculoApplication));
+            services.AddAutoMapper(typeof(ClienteApplication));
             services.AddAutoMapper(typeof(FornecedorApplication));
+            services.AddAutoMapper(typeof(DepositoApplication));
+            services.AddAutoMapper(typeof(MercadoriaApplication));
 
             services.AddInfraServices();
 

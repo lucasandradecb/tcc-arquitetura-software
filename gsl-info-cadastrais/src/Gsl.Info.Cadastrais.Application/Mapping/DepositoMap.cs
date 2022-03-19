@@ -6,19 +6,20 @@ using Gsl.Info.Cadastrais.Domain.ValueObjects;
 namespace Gsl.Info.Cadastrais.Application.Mapping
 {
     /// <summary>
-    /// Mapper de cliente
+    /// Mapper de deposito
     /// </summary>
-    public class ClienteMap : Profile
+    public class DepositoMap : Profile
     {
         /// <summary>
         /// Mapeamento de dados
         /// </summary>
-        public ClienteMap()
+        public DepositoMap()
         {
-            CreateMap<Cliente, ClienteModel>()
-                .ForMember(dest => dest.Aniversario, m => m.MapFrom(src => src.Aniversario))
+            CreateMap<Deposito, DepositoModel>()
+                .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
+                .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.MapFrom(src => src.Endereco))                
-                .ForMember(dest => dest.Cpf, m => m.MapFrom(src => src.Cpf.ToString()))
+                .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome));
 
             CreateMap<EnderecoCompleto, DadosEnderecoModel>()
@@ -30,17 +31,19 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                 .ForMember(dest => dest.Numero, m => m.MapFrom(src => src.Numero))
                 .ReverseMap();
 
-            CreateMap<ClienteModel, Cliente>()
-                .ForMember(dest => dest.Aniversario, m => m.MapFrom(src => src.Aniversario))
+            CreateMap<DepositoModel, Deposito>()
+                .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
+                .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.Ignore())
-                .ForMember(dest => dest.Cpf, m => m.Ignore())
+                .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome))
                 .ConstructUsing(src =>
-                    new Cliente(
+                    new Deposito(
                         src.Nome,
-                        new CPF(src.Cpf),
-                        src.Aniversario,
-                        new EnderecoCompleto(src.Endereco.Cep, src.Endereco.Logradouro, src.Endereco.Numero, src.Endereco.Complemento, src.Endereco.Cidade, src.Endereco.Estado)
+                        src.Codigo,
+                        new EnderecoCompleto(src.Endereco.Cep, src.Endereco.Logradouro, src.Endereco.Numero, src.Endereco.Complemento, src.Endereco.Cidade, src.Endereco.Estado),
+                        src.Latitude,
+                        src.Longitude
                     ));
         }
     }

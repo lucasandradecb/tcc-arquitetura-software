@@ -60,7 +60,7 @@ namespace Gsl.Info.Cadastrais.Application
                 var fornecedor = await _fornecedorRepository.ObterPorCnpj(cnpj, ctx);
                 if (fornecedor == null)
                 {
-                    var notification = new List<Notification> { new Notification(nameof(Fornecedor), MensagensInfo.Fornecedor_NaoEncontrado) };
+                    var notification = new List<Notification> { new Notification(nameof(Fornecedor.Cnpj), MensagensInfo.Fornecedor_NaoEncontrado) };
                     return Result<FornecedorModel>.Error(notification);
                 }
 
@@ -92,7 +92,7 @@ namespace Gsl.Info.Cadastrais.Application
                     return Result<Fornecedor>.Ok(fornecedor);
                 }
 
-                fornecedor.AddNotification(nameof(Fornecedor), MensagensInfo.Fornecedor_CpnjExiste);
+                fornecedor.AddNotification(nameof(Fornecedor.Cnpj), MensagensInfo.Fornecedor_CpnjExiste);
             }
 
             return Result<Fornecedor>.Error(fornecedor.Notifications);

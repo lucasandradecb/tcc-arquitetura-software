@@ -22,7 +22,7 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                 .ForMember(dest => dest.Cnpj, m => m.MapFrom(src => src.Cnpj))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome));
 
-            CreateMap<EnderecoCompleto, FornecedorModel.DadosEnderecoFornecedor>()
+            CreateMap<EnderecoCompleto, DadosEnderecoModel>()
                 .ForMember(dest => dest.Cep, m => m.MapFrom(src => src.Cep))
                 .ForMember(dest => dest.Cidade, m => m.MapFrom(src => src.Cidade))
                 .ForMember(dest => dest.Complemento, m => m.MapFrom(src => src.Complemento))

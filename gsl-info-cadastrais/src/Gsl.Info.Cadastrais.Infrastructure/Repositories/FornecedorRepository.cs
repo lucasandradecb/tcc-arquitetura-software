@@ -42,7 +42,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         public static string ObterChave(string cnpj) => $"fornecedor:{cnpj}";
 
         /// <summary>
-        /// Armazena o cliente no banco de dados
+        /// Armazena o fornecedor no banco de dados
         /// </summary>
         /// <param name="fornecedor"></param>
         /// <param name="ctx"></param>
@@ -77,7 +77,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         }
         
         /// <summary>
-        /// Obtém lista de veiculos
+        /// Obtém lista de fornecedores
         /// </summary>
         /// <returns></returns>
         public async Task<List<Fornecedor>> ListarTodos(CancellationToken ctx)
