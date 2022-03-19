@@ -20,8 +20,6 @@ namespace Gsl.Info.Cadastrais.Application
             services.AddScoped<IDepositoApplication, DepositoApplication>();
             services.AddScoped<IMercadoriaApplication, MercadoriaApplication>();
 
-            services.AddScoped<IUsuarioApplication, UsuarioApplication>();
-            services.AddScoped<IVeiculoApplication, VeiculoApplication>();
             return services;
         }
     }

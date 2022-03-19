@@ -21,12 +21,6 @@ namespace Gsl.Info.Cadastrais.Infrastructure
             services.AddScoped<IDepositoRepository, DepositoRepository>();
             services.AddScoped<IMercadoriaRepository, MercadoriaRepository>();
 
-            services.AddScoped<IMarcaVeiculoRepository, MarcaVeiculoRepository>();
-            services.AddScoped<IModeloVeiculoRepository, ModeloVeiculoRepository>();
-            services.AddScoped<IOperadorRepository, OperadorRepository>();
-            services.AddScoped<IVeiculoRepository, VeiculoRepository>();
-            services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             return services;
         }
     }

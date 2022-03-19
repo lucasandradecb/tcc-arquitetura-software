@@ -40,13 +40,9 @@ namespace Gsl.Info.Cadastrais.Api
                 .WithEnviroments(Configuration)
                 .Add<IClienteRepository, ClienteRepository>()
                 .Add<IFornecedorRepository, FornecedorRepository>()
-                .Add<IMarcaVeiculoRepository, MarcaVeiculoRepository>()
-                .Add<IModeloVeiculoRepository, ModeloVeiculoRepository>()
-                .Add<IOperadorRepository, OperadorRepository>()
-                .Add<IVeiculoRepository, VeiculoRepository>();
+                .Add<IDepositoRepository, DepositoRepository>()
+                .Add<IMercadoriaRepository, MercadoriaRepository>();
 
-            services.AddAutoMapper(typeof(UsuarioApplication));
-            services.AddAutoMapper(typeof(VeiculoApplication));
             services.AddAutoMapper(typeof(ClienteApplication));
             services.AddAutoMapper(typeof(FornecedorApplication));
             services.AddAutoMapper(typeof(DepositoApplication));
