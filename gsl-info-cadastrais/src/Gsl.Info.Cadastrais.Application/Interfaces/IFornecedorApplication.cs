@@ -33,5 +33,21 @@ namespace Gsl.Info.Cadastrais.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<Fornecedor>> CadastrarFornecedor(FornecedorModel fornecedorModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza a atualização de um fornecedor
+        /// </summary>
+        /// <param name="fornecedorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Fornecedor>> AtualizarFornecedor (FornecedorModel fornecedorModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Deletar um fornecedor
+        /// </summary>
+        /// <param name="cnpj"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Fornecedor>> DeletarFornecedor(string cnpj, CancellationToken ctx);
     }
 }

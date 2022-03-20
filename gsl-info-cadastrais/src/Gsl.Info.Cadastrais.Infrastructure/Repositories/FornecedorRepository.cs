@@ -95,7 +95,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             return listaFornecedore;
         }
 
-        public Task<Fornecedor> Atualizar(Fornecedor fornecedor, CancellationToken ctx)
+        public Task Atualizar(Fornecedor fornecedor, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }

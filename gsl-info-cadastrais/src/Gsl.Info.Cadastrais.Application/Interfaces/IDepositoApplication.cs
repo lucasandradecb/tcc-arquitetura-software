@@ -33,5 +33,21 @@ namespace Gsl.Info.Cadastrais.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<Deposito>> CadastrarDeposito(DepositoModel depositoModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza a atualização de um deposito
+        /// </summary>
+        /// <param name="depositoModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Deposito>> AtualizarDeposito(DepositoModel depositoModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Deletar um deposito
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Deposito>> DeletarDeposito(int codigo, CancellationToken ctx);
     }
 }

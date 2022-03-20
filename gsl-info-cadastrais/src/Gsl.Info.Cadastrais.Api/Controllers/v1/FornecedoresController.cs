@@ -94,5 +94,47 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
 
             return UnprocessableEntity(result.Notifications);
         }
+
+        /// <summary>
+        /// Realiza a atualização de um fornecedor
+        /// </summary>
+        /// <param name="fornecedorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(Fornecedor), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AtualizarFornecedor(FornecedorModel fornecedorModel, CancellationToken ctx)
+        {
+            var result = await _fornecedorApplication.AtualizarFornecedor(fornecedorModel, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Deleta um fornecedor
+        /// </summary>
+        /// <param name="cnpj"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpDelete("{cnpj}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletarFornecedor([FromRoute, Required] string cnpj, CancellationToken ctx)
+        {
+            var result = await _fornecedorApplication.DeletarFornecedor(cnpj, ctx);
+
+            if (result.Valid)
+                return Ok();
+
+            return UnprocessableEntity(result.Notifications);
+        }
     }
 }

@@ -9,6 +9,7 @@ using Gsl.Info.Cadastrais.Domain.Resources;
 using Gsl.Info.Cadastrais.Domain.ValueObjects;
 using Flunt.Notifications;
 using System.Collections.Generic;
+using System;
 
 namespace Gsl.Info.Cadastrais.Application
 {
@@ -101,6 +102,59 @@ namespace Gsl.Info.Cadastrais.Application
             }
 
             return Result<Cliente>.Error(cliente.Notifications);
+        }
+
+        #endregion
+
+        #region Atualizar
+
+        /// <summary>
+        /// Atualiza dados do cliente
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Cliente>> AtualizarCliente(ClienteModel clienteModel, CancellationToken ctx)
+        {
+            var cliente = _mapper.Map<ClienteModel, Cliente>(clienteModel);
+
+            if (cliente.Valid)
+            {
+                if (await _clienteRepository.VerificarSeExiste(cliente, ctx))
+                {
+                    await _clienteRepository.Atualizar(cliente, ctx);
+                    return Result<Cliente>.Ok(cliente);
+                }
+
+                cliente.AddNotification(nameof(Cliente.Cpf), MensagensInfo.Cliente_NaoEncontrado);
+            }
+
+            return Result<Cliente>.Error(cliente.Notifications);
+        }
+
+        #endregion
+
+        #region Deletar
+
+        /// <summary>
+        /// Deleta um cliente pelo cpf
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Cliente>> DeletarCliente(string cpf, CancellationToken ctx)
+        {
+            try
+            {
+                await _clienteRepository.Deletar(cpf, ctx);
+            }
+            catch (Exception)
+            {
+                var notification = new List<Notification> { new Notification(nameof(Cliente.Cpf), MensagensInfo.Cliente_ErroDeletar) };
+                return Result<Cliente>.Error(notification);
+            }
+
+            return Result<Cliente>.Ok(new Cliente());
         }
 
         #endregion

@@ -43,7 +43,7 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// <returns></returns>
         /// <param name="fornecedor"></param>
         /// <param name="ctx"></param>
-        Task<Fornecedor> Atualizar(Fornecedor fornecedor, CancellationToken ctx);
+        Task Atualizar(Fornecedor fornecedor, CancellationToken ctx);
         /// <summary>
         /// Deleta o fornecedor pelo cnpj
         /// </summary>

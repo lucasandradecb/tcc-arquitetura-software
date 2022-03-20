@@ -43,7 +43,7 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// <returns></returns>
         /// <param name="cliente"></param>
         /// <param name="ctx"></param>
-        Task<Cliente> Atualizar(Cliente cliente, CancellationToken ctx);
+        Task Atualizar(Cliente cliente, CancellationToken ctx);
         /// <summary>
         /// Deleta o cliente pelo cpf
         /// </summary>

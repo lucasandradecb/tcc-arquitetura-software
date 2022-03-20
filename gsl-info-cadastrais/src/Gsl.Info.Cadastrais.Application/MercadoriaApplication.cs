@@ -96,6 +96,16 @@ namespace Gsl.Info.Cadastrais.Application
             return Result<Mercadoria>.Error(mercadoria.Notifications);
         }
 
+        #endregion
+
+        #region Atualizar
+
+        /// <summary>
+        /// Atualiza uma mercadoria pelo codigo
+        /// </summary>
+        /// <param name="mercadoriaModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         public async Task<Result<Mercadoria>> AtualizarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx)
         {
             var mercadoria = _mapper.Map<MercadoriaModel, Mercadoria>(mercadoriaModel);
@@ -114,6 +124,16 @@ namespace Gsl.Info.Cadastrais.Application
             return Result<Mercadoria>.Error(mercadoria.Notifications);
         }
 
+        #endregion
+
+        #region Deletar
+
+        /// <summary>
+        /// Deleta uma mercadoria pelo codigo
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         public async Task<Result<Mercadoria>> DeletarMercadoria(int codigo, CancellationToken ctx)
         {
             try

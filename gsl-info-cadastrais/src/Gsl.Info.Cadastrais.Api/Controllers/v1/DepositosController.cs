@@ -60,11 +60,11 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
         /// <param name="ctx"></param>
         /// <returns></returns>
         [HttpGet("{codigo}")]
-        [ProducesResponseType(typeof(FornecedorModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DepositoModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ObterFornecedor([FromRoute, Required] int codigo, CancellationToken ctx)
+        public async Task<IActionResult> ObterDeposito([FromRoute, Required] int codigo, CancellationToken ctx)
         {
             var result = await _depositoApplication.ObterDeposito(codigo, ctx);
 
@@ -85,12 +85,54 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CadastrarFornecedor(DepositoModel depositoModel, CancellationToken ctx)
+        public async Task<IActionResult> CadastrarDeposito(DepositoModel depositoModel, CancellationToken ctx)
         {
             var result = await _depositoApplication.CadastrarDeposito(depositoModel, ctx);
 
             if (result.Valid)
                 return Created("/depositos", result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Realiza a atualização de um deposito
+        /// </summary>
+        /// <param name="depositoModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(Deposito), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AtualizarDeposito(DepositoModel depositoModel, CancellationToken ctx)
+        {
+            var result = await _depositoApplication.AtualizarDeposito(depositoModel, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Deleta um deposito
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpDelete("{codigo}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletarDeposito([FromRoute, Required] int codigo, CancellationToken ctx)
+        {
+            var result = await _depositoApplication.DeletarDeposito(codigo, ctx);
+
+            if (result.Valid)
+                return Ok();
 
             return UnprocessableEntity(result.Notifications);
         }

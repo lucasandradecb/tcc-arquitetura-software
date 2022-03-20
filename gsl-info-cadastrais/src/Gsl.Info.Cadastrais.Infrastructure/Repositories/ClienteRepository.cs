@@ -95,7 +95,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             return listaClientes;
         }
 
-        public Task<Cliente> Atualizar(Cliente cliente, CancellationToken ctx)
+        public Task Atualizar(Cliente cliente, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }

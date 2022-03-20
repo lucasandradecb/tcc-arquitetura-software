@@ -8,6 +8,7 @@ using Gsl.Info.Cadastrais.Domain.Repositories;
 using Gsl.Info.Cadastrais.Domain.Resources;
 using Flunt.Notifications;
 using System.Collections.Generic;
+using System;
 
 namespace Gsl.Info.Cadastrais.Application
 {
@@ -97,5 +98,57 @@ namespace Gsl.Info.Cadastrais.Application
 
         #endregion
 
+        #region Atualizar
+
+        /// <summary>
+        /// Atualiza dados do deposito
+        /// </summary>
+        /// <param name="depositoModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Deposito>> AtualizarDeposito(DepositoModel depositoModel, CancellationToken ctx)
+        {
+            var deposito = _mapper.Map<DepositoModel, Deposito>(depositoModel);
+
+            if (deposito.Valid)
+            {
+                if (await _depositoRepository.VerificarSeExiste(deposito, ctx))
+                {
+                    await _depositoRepository.Atualizar(deposito, ctx);
+                    return Result<Deposito>.Ok(deposito);
+                }
+
+                deposito.AddNotification(nameof(Deposito.Codigo), MensagensInfo.Deposito_NaoEncontrado);
+            }
+
+            return Result<Deposito>.Error(deposito.Notifications);
+        }
+
+        #endregion
+
+        #region Deletar
+
+        /// <summary>
+        /// Deleta um deposito pelo codigo
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Deposito>> DeletarDeposito(int codigo, CancellationToken ctx)
+        {
+            try
+            {
+                await _depositoRepository.Deletar(codigo, ctx);
+            }
+            catch (Exception)
+            {
+                var notification = new List<Notification> { new Notification(nameof(Deposito.Codigo), MensagensInfo.Deposito_ErroDeletar) };
+                return Result<Deposito>.Error(notification);
+            }
+
+            return Result<Deposito>.Ok(new Deposito());
+        }
+
+        #endregion
     }
 }

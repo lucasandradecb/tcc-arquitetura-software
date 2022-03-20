@@ -94,5 +94,47 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
 
             return UnprocessableEntity(result.Notifications);
         }
+
+        /// <summary>
+        /// Realiza a atualização de um cliente
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AtualizarCliente(ClienteModel clienteModel, CancellationToken ctx)
+        {
+            var result = await _clienteApplication.AtualizarCliente(clienteModel, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Deleta um cliente
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpDelete("{cpf}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletarFornecedor([FromRoute, Required] string cpf, CancellationToken ctx)
+        {
+            var result = await _clienteApplication.DeletarCliente(cpf, ctx);
+
+            if (result.Valid)
+                return Ok();
+
+            return UnprocessableEntity(result.Notifications);
+        }
     }
 }

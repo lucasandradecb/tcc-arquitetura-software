@@ -8,6 +8,7 @@ using Gsl.Info.Cadastrais.Domain.Repositories;
 using Gsl.Info.Cadastrais.Domain.Resources;
 using Flunt.Notifications;
 using System.Collections.Generic;
+using System;
 
 namespace Gsl.Info.Cadastrais.Application
 {
@@ -96,6 +97,59 @@ namespace Gsl.Info.Cadastrais.Application
             }
 
             return Result<Fornecedor>.Error(fornecedor.Notifications);
+        }
+
+        #endregion
+
+        #region Atualizar
+
+        /// <summary>
+        /// Atualiza dados do fornecedor
+        /// </summary>
+        /// <param name="fornecedorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Fornecedor>> AtualizarFornecedor(FornecedorModel fornecedorModel, CancellationToken ctx)
+        {
+            var fornecedor = _mapper.Map<FornecedorModel, Fornecedor>(fornecedorModel);
+
+            if (fornecedor.Valid)
+            {
+                if (await _fornecedorRepository.VerificarSeExiste(fornecedor, ctx))
+                {
+                    await _fornecedorRepository.Atualizar(fornecedor, ctx);
+                    return Result<Fornecedor>.Ok(fornecedor);
+                }
+
+                fornecedor.AddNotification(nameof(Fornecedor.Cnpj), MensagensInfo.Fornecedor_NaoEncontrado);
+            }
+
+            return Result<Fornecedor>.Error(fornecedor.Notifications);
+        }
+
+        #endregion
+
+        #region Deletar
+
+        /// <summary>
+        /// Deleta um fornecedor pelo CNPJ
+        /// </summary>
+        /// <param name="cnpj"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<Fornecedor>> DeletarFornecedor(string cnpj, CancellationToken ctx)
+        {
+            try
+            {
+                await _fornecedorRepository.Deletar(cnpj, ctx);
+            }
+            catch (Exception)
+            {
+                var notification = new List<Notification> { new Notification(nameof(Fornecedor.Cnpj), MensagensInfo.Fornecedor_ErroDeletar) };
+                return Result<Fornecedor>.Error(notification);
+            }
+
+            return Result<Fornecedor>.Ok(new Fornecedor());
         }
 
         #endregion

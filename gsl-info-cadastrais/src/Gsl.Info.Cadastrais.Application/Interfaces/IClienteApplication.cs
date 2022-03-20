@@ -33,5 +33,21 @@ namespace Gsl.Info.Cadastrais.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<Cliente>> CadastrarCliente(ClienteModel clienteModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza a atualização de um cliente
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Cliente>> AtualizarCliente(ClienteModel clienteModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Deletar um cliente
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Cliente>> DeletarCliente(string cpf, CancellationToken ctx);
     }
 }
