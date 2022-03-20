@@ -94,5 +94,15 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             return listaDepositos;
         }
+
+        public Task<Deposito> Atualizar(Deposito deposito, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Deletar(int codigo, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
     }    
 }

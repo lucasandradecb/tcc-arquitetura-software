@@ -70,6 +70,15 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar cliente com o CPF informado!.
+        /// </summary>
+        public static string Cliente_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Cliente_ErroDeletar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi encontrado cliente com o CPF informado!.
         /// </summary>
         public static string Cliente_NaoEncontrado {
@@ -84,6 +93,15 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         public static string Deposito_CodigoExiste {
             get {
                 return ResourceManager.GetString("Deposito_CodigoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar depósito com o código informado!.
+        /// </summary>
+        public static string Deposito_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Deposito_ErroDeletar", resourceCulture);
             }
         }
         
@@ -106,6 +124,15 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar fornecedor com o CNPJ informado!.
+        /// </summary>
+        public static string Fornecedor_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Fornecedor_ErroDeletar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi encontrado fornecedor com o CNPJ informado..
         /// </summary>
         public static string Fornecedor_NaoEncontrado {
@@ -120,6 +147,15 @@ namespace Gsl.Info.Cadastrais.Domain.Resources {
         public static string Mercadoria_CodigoExiste {
             get {
                 return ResourceManager.GetString("Mercadoria_CodigoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar mercadoria com o código informado!.
+        /// </summary>
+        public static string Mercadoria_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Mercadoria_ErroDeletar", resourceCulture);
             }
         }
         

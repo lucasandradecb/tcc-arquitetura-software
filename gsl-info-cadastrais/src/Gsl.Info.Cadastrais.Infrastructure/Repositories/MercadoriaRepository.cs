@@ -88,20 +88,19 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             return lista.ToList();
         }
 
-        public async Task<Mercadoria> Atualizar(Mercadoria mercadoria, CancellationToken ctx)
+        public async Task Atualizar(Mercadoria mercadoria, CancellationToken ctx)
         {
             var sqlInsert =
                 $@"UPDATE Mercadoria SET
-                  nome,
-				  quantidade,
-				  valor,
+                  nome = @{ nameof(mercadoria.Nome)},
+				  quantidade = @{ nameof(mercadoria.Quantidade)},
+                  valor = @{ nameof(mercadoria.Valor)},
                   dataatualizacao = GETDATE()     
                 WHERE codigo = @{nameof(mercadoria.Codigo)}";
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            await connection.ExecuteAsync(sqlInsert, new { mercadoria.Codigo });
-            return await ObterPorCodigo(mercadoria.Codigo, ctx);
+            await connection.ExecuteAsync(sqlInsert, mercadoria);
         }
 
         public async Task Deletar(int codigo, CancellationToken ctx)

@@ -33,5 +33,21 @@ namespace Gsl.Info.Cadastrais.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<Mercadoria>> CadastrarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza a atualização de uma Mercadoria
+        /// </summary>
+        /// <param name="mercadoriaModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Mercadoria>> AtualizarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Deletar de uma mercadoria
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Mercadoria>> DeletarMercadoria(int codigo, CancellationToken ctx);
     }
 }

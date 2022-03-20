@@ -8,6 +8,7 @@ using Gsl.Info.Cadastrais.Domain.Repositories;
 using Gsl.Info.Cadastrais.Domain.Resources;
 using Flunt.Notifications;
 using System.Collections.Generic;
+using System;
 
 namespace Gsl.Info.Cadastrais.Application
 {
@@ -93,6 +94,39 @@ namespace Gsl.Info.Cadastrais.Application
             }
 
             return Result<Mercadoria>.Error(mercadoria.Notifications);
+        }
+
+        public async Task<Result<Mercadoria>> AtualizarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx)
+        {
+            var mercadoria = _mapper.Map<MercadoriaModel, Mercadoria>(mercadoriaModel);
+
+            if (mercadoria.Valid)
+            {
+                if (await _mercadoriaRepository.VerificarSeExiste(mercadoria, ctx))
+                {
+                    await _mercadoriaRepository.Atualizar(mercadoria, ctx);
+                    return Result<Mercadoria>.Ok(mercadoria);
+                }
+
+                mercadoria.AddNotification(nameof(Mercadoria.Codigo), MensagensInfo.Mercadoria_NaoEncontrada);
+            }
+
+            return Result<Mercadoria>.Error(mercadoria.Notifications);
+        }
+
+        public async Task<Result<Mercadoria>> DeletarMercadoria(int codigo, CancellationToken ctx)
+        {
+            try
+            {
+                await _mercadoriaRepository.Deletar(codigo, ctx);
+            }
+            catch(Exception)
+            {
+                var notification = new List<Notification> { new Notification(nameof(Mercadoria.Codigo), MensagensInfo.Mercadoria_ErroDeletar) };
+                return Result<Mercadoria>.Error(notification);
+            }
+
+            return Result<Mercadoria>.Ok(new Mercadoria());
         }
 
         #endregion

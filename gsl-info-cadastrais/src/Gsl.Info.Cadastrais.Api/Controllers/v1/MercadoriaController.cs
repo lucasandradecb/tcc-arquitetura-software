@@ -64,7 +64,7 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ObterFornecedor([FromRoute, Required] int codigo, CancellationToken ctx)
+        public async Task<IActionResult> ObterMercadoria([FromRoute, Required] int codigo, CancellationToken ctx)
         {
             var result = await _mercadoriaApplication.ObterMercadoria(codigo, ctx);
 
@@ -85,12 +85,54 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CadastrarFornecedor(MercadoriaModel mercadoriaModel, CancellationToken ctx)
+        public async Task<IActionResult> CadastrarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx)
         {
             var result = await _mercadoriaApplication.CadastrarMercadoria(mercadoriaModel, ctx);
 
             if (result.Valid)
                 return Created("/mercadorias", result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Realiza a atualização de uma mercadoria
+        /// </summary>
+        /// <param name="mercadoriaModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(typeof(Mercadoria), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AtualizarMercadoria(MercadoriaModel mercadoriaModel, CancellationToken ctx)
+        {
+            var result = await _mercadoriaApplication.AtualizarMercadoria(mercadoriaModel, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Deleta uma mercadoria
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpDelete("{codigo}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletarMercadoria([FromRoute, Required] int codigo, CancellationToken ctx)
+        {
+            var result = await _mercadoriaApplication.DeletarMercadoria(codigo, ctx);
+
+            if (result.Valid)
+                return Ok();
 
             return UnprocessableEntity(result.Notifications);
         }

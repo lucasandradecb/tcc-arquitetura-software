@@ -43,13 +43,13 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// <returns></returns>
         /// <param name="mercadoria"></param>
         /// <param name="ctx"></param>
-        Task<Mercadoria> Atualizar(Mercadoria mercadoria, CancellationToken ctx);
+        Task Atualizar(Mercadoria mercadoria, CancellationToken ctx);
         /// <summary>
         /// Deleta a mercadoria por codigo
         /// </summary>
         /// <param name="codigo"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Mercadoria> Deletar(int codigo, CancellationToken ctx);
+        Task Deletar(int codigo, CancellationToken ctx);
     }
 }
