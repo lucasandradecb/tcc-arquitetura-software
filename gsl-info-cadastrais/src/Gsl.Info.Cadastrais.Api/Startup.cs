@@ -36,15 +36,6 @@ namespace Gsl.Info.Cadastrais.Api
 
             services.AddMvc(options => options.Filters.Add(new DefaultExceptionFilterAttribute()));
 
-           // services.AddSingleton<ConnectionString>(new ConnectionString(Configuration.GetValue<string>("ConnectionString:SqlServer_db")));
-
-            services.AddRedis()
-                .WithEnviroments(Configuration)
-                .Add<IClienteRepository, ClienteRepository>()
-                .Add<IFornecedorRepository, FornecedorRepository>()
-                .Add<IDepositoRepository, DepositoRepository>();
-                //.Add<IMercadoriaRepository, MercadoriaRepository>();
-
             services.AddAutoMapper(typeof(ClienteApplication));
             services.AddAutoMapper(typeof(FornecedorApplication));
             services.AddAutoMapper(typeof(DepositoApplication));

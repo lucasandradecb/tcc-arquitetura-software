@@ -1,98 +1,24 @@
 ﻿using Gsl.Info.Cadastrais.Domain.Entities;
 using Gsl.Info.Cadastrais.Domain.Repositories;
 using System;
-using Localiza.BuildingBlocks.Redis;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
     /// <summary>
     /// Repositório de fornecedores
     /// </summary>
-    [ExcludeFromCodeCoverage]
-    public class FornecedorRepository : RedisRepository<Fornecedor>, IFornecedorRepository
+    public class FornecedorRepository : IFornecedorRepository
     {
-        private TimeSpan REDIS_TEMPO_EXPIRACAO = new TimeSpan(10, 0, 0, 0);
+        private ISqlServerDbContext SqlServerDbContext { get; }
 
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="config"></param>
-        public FornecedorRepository(RedisConfiguration config) : base(config)
+        public FornecedorRepository(ISqlServerDbContext sqlServerDbContext)
         {
-            
-        }
-
-        /// <summary>
-        /// Cria uma chave de acesso ao redis
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        protected override string CreateRedisKey(Fornecedor model) => ObterChave(model.Cnpj);
-
-        /// <summary>
-        /// Obtém chave de acesso do redis
-        /// </summary>
-        /// <param name="cpf"></param>
-        /// <returns></returns>
-        public static string ObterChave(string cnpj) => $"fornecedor:{cnpj}";
-
-        /// <summary>
-        /// Armazena o fornecedor no banco de dados
-        /// </summary>
-        /// <param name="fornecedor"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task Salvar(Fornecedor fornecedor, CancellationToken ctx)
-        {
-            await Add(fornecedor, ctx, REDIS_TEMPO_EXPIRACAO);
-        }
-
-        /// <summary>
-        /// Obtém o fornecedor pelo cnpj
-        /// </summary>
-        /// <param name="cnpj"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<Fornecedor> ObterPorCnpj(string cnpj, CancellationToken ctx)
-        {
-            return await GetByKey(ObterChave(cnpj), ctx);
-        }
-
-        /// <summary>
-        /// Verifica se o fornecedor já existe no banco
-        /// </summary>
-        /// <param name="fornecedor"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<bool> VerificarSeExiste(Fornecedor fornecedor, CancellationToken ctx)
-        {
-            var fornecedorExistente = await ObterPorCnpj(fornecedor.Cnpj, ctx);
-
-            return fornecedorExistente?.Cnpj == fornecedor.Cnpj;
-        }
-        
-        /// <summary>
-        /// Obtém lista de fornecedores
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Fornecedor>> ListarTodos(CancellationToken ctx)
-        {
-            var listaChaves = GetServer().Keys(pattern: "fornecedor:*").ToList();
-            var listaFornecedore = new List<Fornecedor>();
-
-            foreach (var chave in listaChaves)
-            {
-                var fornecedor = await GetByKey(chave, ctx);
-                if (fornecedor != default)
-                    listaFornecedore.Add(fornecedor);
-            }
-
-            return listaFornecedore;
+            SqlServerDbContext = sqlServerDbContext;
         }
 
         public Task Atualizar(Fornecedor fornecedor, CancellationToken ctx)
@@ -104,5 +30,69 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-    }    
+
+        public Task<List<Fornecedor>> ListarTodos(CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Fornecedor> ObterPorCnpj(string cnpj, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Salvar(Fornecedor fornecedor, CancellationToken ctx)
+        {
+            var sqlInsert =
+                $@"INSERT INTO Fornecedor
+					(id,
+					cnpj,
+					nome,
+					latitude,
+					longitude,
+                    cep,
+                    logradouro,
+                    numero,
+                    complemento,
+                    cidade,
+                    estado,
+					datacriacao)
+				VALUES 
+					(@Id,
+					@Cnpj,
+					@Nome,
+					@Latitude,
+					@Longitude,
+                    @Cep,
+                    @Logradouro,
+                    @Numero,
+                    @Complemento,
+                    @Cidade,
+                    @Estado,
+					@DataCriacao)";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", fornecedor.Id, System.Data.DbType.Guid);
+            parameters.Add("@Cnpj", fornecedor.Cnpj, System.Data.DbType.AnsiString);
+            parameters.Add("@Nome", fornecedor.Nome, System.Data.DbType.AnsiString);
+            parameters.Add("@Latitude", fornecedor.Latitude, System.Data.DbType.Decimal);
+            parameters.Add("@Longitude", fornecedor.Longitude, System.Data.DbType.Decimal);
+            parameters.Add("@Cep", fornecedor.Endereco.Cep, System.Data.DbType.AnsiString);
+            parameters.Add("@Logradouro", fornecedor.Endereco.Logradouro, System.Data.DbType.AnsiString);
+            parameters.Add("@Numero", Int64.Parse(fornecedor.Endereco.Numero), System.Data.DbType.Int64);
+            parameters.Add("@Complemento", fornecedor.Endereco.Complemento, System.Data.DbType.AnsiString);
+            parameters.Add("@Cidade", fornecedor.Endereco.Cidade, System.Data.DbType.AnsiString);
+            parameters.Add("@Estado", fornecedor.Endereco.Estado, System.Data.DbType.AnsiString);
+            parameters.Add("@DataCriacao", fornecedor.DataCriacao, System.Data.DbType.DateTime);
+
+            await connection.ExecuteAsync(sqlInsert, parameters);
+        }
+
+        public Task<bool> VerificarSeExiste(Fornecedor fornecedor, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,98 +1,24 @@
 ﻿using Gsl.Info.Cadastrais.Domain.Entities;
 using Gsl.Info.Cadastrais.Domain.Repositories;
 using System;
-using Localiza.BuildingBlocks.Redis;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
     /// <summary>
     /// Repositório de clientes
     /// </summary>
-    [ExcludeFromCodeCoverage]
-    public class ClienteRepository : RedisRepository<Cliente>, IClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
-        private TimeSpan REDIS_TEMPO_EXPIRACAO = new TimeSpan(10, 0, 0, 0);
+        private ISqlServerDbContext SqlServerDbContext { get; }
 
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="config"></param>
-        public ClienteRepository(RedisConfiguration config) : base(config)
+        public ClienteRepository(ISqlServerDbContext sqlServerDbContext)
         {
-            
-        }
-
-        /// <summary>
-        /// Cria uma chave de acesso ao redis
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        protected override string CreateRedisKey(Cliente model) => ObterChave(model.Cpf.Numero);
-
-        /// <summary>
-        /// Obtém chave de acesso do redis
-        /// </summary>
-        /// <param name="cpf"></param>
-        /// <returns></returns>
-        public static string ObterChave(string cpf) => $"cliente:{cpf}";
-
-        /// <summary>
-        /// Armazena o cliente no banco de dados
-        /// </summary>
-        /// <param name="cliente"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task Salvar(Cliente cliente, CancellationToken ctx)
-        {
-            await Add(cliente, ctx, REDIS_TEMPO_EXPIRACAO);
-        }
-
-        /// <summary>
-        /// Obtém o cliente pelo cpf
-        /// </summary>
-        /// <param name="cpf"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<Cliente> ObterPorCpf(string cpf, CancellationToken ctx)
-        {
-            return await GetByKey(ObterChave(cpf), ctx);
-        }
-
-        /// <summary>
-        /// Verifica se o cliente já existe no banco
-        /// </summary>
-        /// <param name="cliente"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        public async Task<bool> VerificarSeExiste(Cliente cliente, CancellationToken ctx)
-        {
-            var clienteExistente = await ObterPorCpf(cliente.Cpf.Numero, ctx);
-
-            return clienteExistente?.Cpf?.Numero == cliente.Cpf.Numero;
-        }
-        
-        /// <summary>
-        /// Obtém lista de clientes
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Cliente>> ListarTodos(CancellationToken ctx)
-        {
-            var listaChaves = GetServer().Keys(pattern: "cliente:*").ToList();
-            var listaClientes = new List<Cliente>();
-
-            foreach (var chave in listaChaves)
-            {
-                var cliente = await GetByKey(chave, ctx);
-                if (cliente != default)
-                    listaClientes.Add(cliente);
-            }
-
-            return listaClientes;
+            SqlServerDbContext = sqlServerDbContext;
         }
 
         public Task Atualizar(Cliente cliente, CancellationToken ctx)
@@ -104,5 +30,66 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-    }    
+
+        public Task<List<Cliente>> ListarTodos(CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Cliente> ObterPorCpf(string cpf, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Salvar(Cliente cliente, CancellationToken ctx)
+        {
+            var sqlInsert =
+                $@"INSERT INTO Cliente
+					(id,
+					cpf,
+					nome,
+					aniversario,
+                    cep,
+                    logradouro,
+                    numero,
+                    complemento,
+                    cidade,
+                    estado,
+					datacriacao)
+				VALUES 
+					(@Id,
+					@Cpf,
+					@Nome,
+					@Aniversario,
+                    @Cep,
+                    @Logradouro,
+                    @Numero,
+                    @Complemento,
+                    @Cidade,
+                    @Estado,
+					@DataCriacao)";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", cliente.Id, System.Data.DbType.Guid);
+            parameters.Add("@Cpf", cliente.Cpf, System.Data.DbType.AnsiString);
+            parameters.Add("@Nome", cliente.Nome, System.Data.DbType.AnsiString);
+            parameters.Add("@Aniversario", cliente.Aniversario, System.Data.DbType.DateTime);
+            parameters.Add("@Cep", cliente.Endereco.Cep, System.Data.DbType.AnsiString);
+            parameters.Add("@Logradouro", cliente.Endereco.Logradouro, System.Data.DbType.AnsiString);
+            parameters.Add("@Numero", Int64.Parse(cliente.Endereco.Numero), System.Data.DbType.Int64);
+            parameters.Add("@Complemento", cliente.Endereco.Complemento, System.Data.DbType.AnsiString);
+            parameters.Add("@Cidade", cliente.Endereco.Cidade, System.Data.DbType.AnsiString);
+            parameters.Add("@Estado", cliente.Endereco.Estado, System.Data.DbType.AnsiString);
+            parameters.Add("@DataCriacao", cliente.DataCriacao, System.Data.DbType.DateTime);
+
+            await connection.ExecuteAsync(sqlInsert, parameters);
+        }
+
+        public Task<bool> VerificarSeExiste(Cliente cliente, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
