@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Gsl.Info.Cadastrais.Domain.ValueObjects;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
@@ -87,8 +88,13 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            var lista = await connection.QueryAsync<Fornecedor>(sqlInsert);
-            return lista.ToList();
+            var listaDinamica = await connection.QueryAsync<dynamic>(sqlInsert);
+            var listaFornecedores = new List<Fornecedor>();
+
+            foreach (var item in listaDinamica.ToList())
+                listaFornecedores.Add(ConverterSelectToFornecedor(item));
+
+            return listaFornecedores;
         }
 
         public async Task<Fornecedor> ObterPorCnpj(string cnpj, CancellationToken ctx)
@@ -113,7 +119,8 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Fornecedor>(sqlInsert, new { cnpj });
+            var fornecedorDinamico = await connection.QueryFirstOrDefaultAsync<dynamic>(sqlInsert, new { cnpj });
+            return fornecedorDinamico != null ? ConverterSelectToFornecedor(fornecedorDinamico) : fornecedorDinamico;
         }
 
         public async Task Salvar(Fornecedor fornecedor, CancellationToken ctx)
@@ -171,5 +178,26 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             return fornecedorExistente?.Cnpj == fornecedor.Cnpj;
         }
+
+        #region Métodos privados
+
+        private Fornecedor ConverterSelectToFornecedor(dynamic select)
+        {
+            var endereco = new EnderecoCompleto(select.cep, select.logradouro, select.numero.ToString(), select?.complemento, select.cidade, select.estado);
+            string cnpj = select.cnpj;
+            double latitude = Convert.ToDouble(select.latitude);
+            double longitude = Convert.ToDouble(select.longitude);
+            string nome = select.nome;
+
+            return new Fornecedor(
+                        nome,
+                        cnpj,
+                        endereco,
+                        latitude,
+                        longitude
+                    );
+        }
+
+        #endregion
     }
 }

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Dapper;
 using System.Linq;
+using Gsl.Info.Cadastrais.Domain.ValueObjects;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
@@ -35,16 +36,19 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
                     numero,
                     complemento,
                     cidade,
-                    estado,
-					datacriacao,
-                    dataatualizacao
+                    estado
                 FROM Deposito
                 ORDER BY codigo DESC";
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            var lista = await connection.QueryAsync<Deposito>(sqlInsert);
-            return lista.ToList();
+            var listaDinamica = await connection.QueryAsync<dynamic>(sqlInsert);
+            var listaDepositos = new List<Deposito>();
+
+            foreach (var item in listaDinamica.ToList())            
+                listaDepositos.Add(ConverterSelectToDeposito(item));            
+
+            return listaDepositos;
         }
 
         public async Task<Deposito> ObterPorCodigo(int codigo, CancellationToken ctx)
@@ -61,15 +65,14 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
                     numero,
                     complemento,
                     cidade,
-                    estado,
-					datacriacao,
-                    dataatualizacao
+                    estado
                 FROM Deposito
                 WHERE codigo = @{nameof(codigo)}";
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Deposito>(sqlInsert, new { codigo });
+            var depositoDinamico = await connection.QueryFirstOrDefaultAsync<dynamic>(sqlInsert, new { codigo });
+            return depositoDinamico != null ? ConverterSelectToDeposito(depositoDinamico) : depositoDinamico;
         }
 
         public async Task Salvar(Deposito deposito, CancellationToken ctx)
@@ -170,6 +173,27 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             using var connection = SqlServerDbContext.GetConnection();
 
             await connection.ExecuteAsync(sqlInsert, new { codigo });
-        }       
-    }    
+        }
+
+        #region Métodos privados
+
+        private Deposito ConverterSelectToDeposito (dynamic select)
+        {
+            var endereco = new EnderecoCompleto(select.cep, select.logradouro, select.numero.ToString(), select?.complemento, select.cidade, select.estado);
+            int codigo = select.codigo;
+            double latitude = Convert.ToDouble(select.latitude);
+            double longitude = Convert.ToDouble(select.longitude);
+            string nome = select.nome;
+
+            return new Deposito(
+                        nome,
+                        codigo,
+                        endereco,
+                        latitude,
+                        longitude
+                    );
+        }
+
+        #endregion
+    }
 }

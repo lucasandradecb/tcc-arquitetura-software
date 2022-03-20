@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Gsl.Info.Cadastrais.Domain.ValueObjects;
 
 namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 {
@@ -24,7 +25,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         public async Task Atualizar(Cliente cliente, CancellationToken ctx)
         {
             var sqlInsert =
-                  $@"UPDATE Fornecedor SET
+                  $@"UPDATE Cliente SET
 					nome = @Nome,
 					aniversario = @Aniversario,
                     cep = @Cep,
@@ -33,15 +34,15 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
                     complemento = @Complemento,
                     cidade = @Cidade,
                     estado = @Estado,
-                  dataatualizacao = GETDATE()     
-                WHERE cpf = @Cpf";
+                    dataatualizacao = GETDATE()     
+                  WHERE cpf = @Cpf";
 
             using var connection = SqlServerDbContext.GetConnection();
 
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Cpf", cliente.Cpf, System.Data.DbType.AnsiString);
+            parameters.Add("@Cpf", cliente.Cpf.Numero, System.Data.DbType.AnsiString);
             parameters.Add("@Nome", cliente.Nome, System.Data.DbType.AnsiString);
-            parameters.Add("@Latitude", cliente.Aniversario, System.Data.DbType.DateTime);
+            parameters.Add("@Aniversario", cliente.Aniversario, System.Data.DbType.DateTime);
             parameters.Add("@Cep", cliente.Endereco.Cep, System.Data.DbType.AnsiString);
             parameters.Add("@Logradouro", cliente.Endereco.Logradouro, System.Data.DbType.AnsiString);
             parameters.Add("@Numero", Int64.Parse(cliente.Endereco.Numero), System.Data.DbType.Int64);
@@ -84,8 +85,13 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            var lista = await connection.QueryAsync<Cliente>(sqlInsert);
-            return lista.ToList();
+            var listaDinamica = await connection.QueryAsync<dynamic>(sqlInsert);
+            var listaClientes = new List<Cliente>();
+
+            foreach (var item in listaDinamica.ToList())
+                listaClientes.Add(ConverterSelectToCliente(item));
+
+            return listaClientes;
         }
 
         public async Task<Cliente> ObterPorCpf(string cpf, CancellationToken ctx)
@@ -109,7 +115,8 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Cliente>(sqlInsert, new { cpf });
+            var clienteDinamico = await connection.QueryFirstOrDefaultAsync<dynamic>(sqlInsert, new { cpf });
+            return clienteDinamico != null ? ConverterSelectToCliente(clienteDinamico) : clienteDinamico;
         }
 
         public async Task Salvar(Cliente cliente, CancellationToken ctx)
@@ -144,7 +151,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", cliente.Id, System.Data.DbType.Guid);
-            parameters.Add("@Cpf", cliente.Cpf, System.Data.DbType.AnsiString);
+            parameters.Add("@Cpf", cliente.Cpf.Numero, System.Data.DbType.AnsiString);
             parameters.Add("@Nome", cliente.Nome, System.Data.DbType.AnsiString);
             parameters.Add("@Aniversario", cliente.Aniversario, System.Data.DbType.DateTime);
             parameters.Add("@Cep", cliente.Endereco.Cep, System.Data.DbType.AnsiString);
@@ -162,7 +169,26 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         {
             var clienteExistente = await ObterPorCpf(cliente.Cpf.Numero, ctx);
 
-            return clienteExistente?.Cpf == cliente.Cpf;
+            return clienteExistente?.Cpf.Numero == cliente.Cpf.Numero;
         }
+
+        #region Métodos privados
+
+        private Cliente ConverterSelectToCliente(dynamic select)
+        {
+            var endereco = new EnderecoCompleto(select.cep, select.logradouro, select.numero.ToString(), select?.complemento, select.cidade, select.estado);
+            DateTime aniversario = select.aniversario;
+            CPF cpf = new CPF(select.cpf);
+            string nome = select.nome;
+
+            return new Cliente(
+                        nome,
+                        cpf,
+                        aniversario,
+                        endereco
+                    );
+        }
+
+        #endregion
     }
 }

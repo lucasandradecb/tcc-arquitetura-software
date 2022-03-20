@@ -23,7 +23,7 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// <param name="endereco"></param> 
         /// <param name="latitude"></param>
         /// <param name="longitude"></param>
-        public Deposito(string nome, int codigo, EnderecoCompleto endereco, string latitude, string longitude)
+        public Deposito(string nome, int codigo, EnderecoCompleto endereco, double latitude, double longitude)
         {
             Nome = nome;
             Codigo = codigo;
@@ -54,11 +54,11 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// <summary>
         /// Latitude
         /// </summary>
-        public string Latitude { get; set; }
+        public double Latitude { get; set; }
         /// <summary>
         /// Longitude
         /// </summary>
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
         /// <summary>
         /// Data de criação do registro
         /// </summary>
