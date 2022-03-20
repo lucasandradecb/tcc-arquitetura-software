@@ -37,5 +37,19 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// </summary>
         /// <returns></returns>
         Task<List<Deposito>> ListarTodos(CancellationToken ctx);
+        /// <summary>
+        /// Atualiza um deposito
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="deposito"></param>
+        /// <param name="ctx"></param>
+        Task<Deposito> Atualizar(Deposito deposito, CancellationToken ctx);
+        /// <summary>
+        /// Deleta o deposito por codigo
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task Deletar(int codigo, CancellationToken ctx);
     }
 }

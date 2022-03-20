@@ -36,7 +36,7 @@ namespace Gsl.Info.Cadastrais.Api
 
             services.AddMvc(options => options.Filters.Add(new DefaultExceptionFilterAttribute()));
 
-            services.AddSingleton<ConnectionString>(new ConnectionString(Configuration.GetValue<string>("ConnectionString:SqlServer_db")));
+           // services.AddSingleton<ConnectionString>(new ConnectionString(Configuration.GetValue<string>("ConnectionString:SqlServer_db")));
 
             services.AddRedis()
                 .WithEnviroments(Configuration)

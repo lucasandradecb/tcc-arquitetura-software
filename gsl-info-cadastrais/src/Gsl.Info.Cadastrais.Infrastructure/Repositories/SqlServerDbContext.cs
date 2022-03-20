@@ -32,6 +32,9 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             var conn = new SqlConnection(connectionString);
             Dapper.SqlMapper.AddTypeMap(typeof(string), DbType.AnsiString);
             conn.Open();
+            Console.WriteLine("State: {0}", conn.State);
+            Console.WriteLine("ConnectionTimeout: {0}",
+                conn.ConnectionTimeout);
             return conn;
         }
     }

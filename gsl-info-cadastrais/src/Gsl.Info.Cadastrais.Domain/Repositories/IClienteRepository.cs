@@ -37,5 +37,19 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// </summary>
         /// <returns></returns>
         Task<List<Cliente>> ListarTodos(CancellationToken ctx);
+        /// <summary>
+        /// Atualiza um cliente
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="cliente"></param>
+        /// <param name="ctx"></param>
+        Task<Cliente> Atualizar(Cliente cliente, CancellationToken ctx);
+        /// <summary>
+        /// Deleta o cliente pelo cpf
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task Deletar(string cpf, CancellationToken ctx);
     }
 }

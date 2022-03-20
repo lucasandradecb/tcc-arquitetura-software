@@ -20,7 +20,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "REDIS_PASSWORD": "string.Empty",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server=localhost,1433;Database=TestDB; User Id=sa; Password=TccPucMin@as2022;"
+        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
       }
     },
     "Gsl.Info.Cadastrais.Api": {
@@ -34,7 +34,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "REDIS_PASSWORD": "string.Empty",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server=localhost,1433;Database=TestDB; User Id=sa; Password=TccPucMin@as2022;"
+        "SQL_CONNECTION_STRING": "Server=host.docker.internal,1433;Database=TestDB; User Id=sa; Password=TccPucMin@as2022; Trusted_Connection = True; MultipleActiveResultSets = True;"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

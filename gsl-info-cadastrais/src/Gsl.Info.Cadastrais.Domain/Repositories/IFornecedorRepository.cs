@@ -37,5 +37,19 @@ namespace Gsl.Info.Cadastrais.Domain.Repositories
         /// </summary>
         /// <returns></returns>
         Task<List<Fornecedor>> ListarTodos(CancellationToken ctx);
+        /// <summary>
+        /// Atualiza um fornecedor
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="fornecedor"></param>
+        /// <param name="ctx"></param>
+        Task<Fornecedor> Atualizar(Fornecedor fornecedor, CancellationToken ctx);
+        /// <summary>
+        /// Deleta o fornecedor pelo cnpj
+        /// </summary>
+        /// <param name="cnpj"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task Deletar(string cnpj, CancellationToken ctx);
     }
 }
