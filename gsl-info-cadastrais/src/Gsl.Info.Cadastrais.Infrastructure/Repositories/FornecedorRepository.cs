@@ -21,24 +21,99 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             SqlServerDbContext = sqlServerDbContext;
         }
 
-        public Task Atualizar(Fornecedor fornecedor, CancellationToken ctx)
+        public async Task Atualizar(Fornecedor fornecedor, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                 $@"UPDATE Fornecedor SET
+					nome = @Nome,
+					latitude = @Latitude,
+					longitude = @Longitude,
+                    cep = @Cep,
+                    logradouro = @Logradouro,
+                    numero = @Numero,
+                    complemento = @Complemento,
+                    cidade = @Cidade,
+                    estado = @Estado,
+                  dataatualizacao = GETDATE()     
+                WHERE cnpj = @Cnpj";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Cnpj", fornecedor.Cnpj, System.Data.DbType.AnsiString);
+            parameters.Add("@Nome", fornecedor.Nome, System.Data.DbType.AnsiString);
+            parameters.Add("@Latitude", fornecedor.Latitude, System.Data.DbType.Decimal);
+            parameters.Add("@Longitude", fornecedor.Longitude, System.Data.DbType.Decimal);
+            parameters.Add("@Cep", fornecedor.Endereco.Cep, System.Data.DbType.AnsiString);
+            parameters.Add("@Logradouro", fornecedor.Endereco.Logradouro, System.Data.DbType.AnsiString);
+            parameters.Add("@Numero", Int64.Parse(fornecedor.Endereco.Numero), System.Data.DbType.Int64);
+            parameters.Add("@Complemento", fornecedor.Endereco.Complemento, System.Data.DbType.AnsiString);
+            parameters.Add("@Cidade", fornecedor.Endereco.Cidade, System.Data.DbType.AnsiString);
+            parameters.Add("@Estado", fornecedor.Endereco.Estado, System.Data.DbType.AnsiString);
+
+            await connection.ExecuteAsync(sqlInsert, parameters);
         }
 
-        public Task Deletar(string cnpj, CancellationToken ctx)
+        public async Task Deletar(string cnpj, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+              $@"DELETE FROM Fornecedor
+				 WHERE cnpj = @{nameof(cnpj)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, new { cnpj });
         }
 
-        public Task<List<Fornecedor>> ListarTodos(CancellationToken ctx)
+        public async Task<List<Fornecedor>> ListarTodos(CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                 $@"SELECT 
+                	id,
+					cnpj,
+					nome,
+					latitude,
+					longitude,
+                    cep,
+                    logradouro,
+                    numero,
+                    complemento,
+                    cidade,
+                    estado,
+					datacriacao,
+                    dataatualizacao
+                FROM Fornecedor
+                ORDER BY nome";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            var lista = await connection.QueryAsync<Fornecedor>(sqlInsert);
+            return lista.ToList();
         }
 
-        public Task<Fornecedor> ObterPorCnpj(string cnpj, CancellationToken ctx)
+        public async Task<Fornecedor> ObterPorCnpj(string cnpj, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                $@"SELECT 
+                	id,
+					cnpj,
+					nome,
+					latitude,
+					longitude,
+                    cep,
+                    logradouro,
+                    numero,
+                    complemento,
+                    cidade,
+                    estado,
+					datacriacao,
+                    dataatualizacao
+                FROM Fornecedor
+                WHERE cnpj = @{nameof(cnpj)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Fornecedor>(sqlInsert, new { cnpj });
         }
 
         public async Task Salvar(Fornecedor fornecedor, CancellationToken ctx)
@@ -90,9 +165,11 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             await connection.ExecuteAsync(sqlInsert, parameters);
         }
 
-        public Task<bool> VerificarSeExiste(Fornecedor fornecedor, CancellationToken ctx)
+        public async Task<bool> VerificarSeExiste(Fornecedor fornecedor, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var fornecedorExistente = await ObterPorCnpj(fornecedor.Cnpj, ctx);
+
+            return fornecedorExistente?.Cnpj == fornecedor.Cnpj;
         }
     }
 }
