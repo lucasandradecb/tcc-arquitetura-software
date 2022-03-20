@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY src .
 WORKDIR /src/Gsl.Info.Cadastrais.Api
-RUN dotnet publish Teste.El.Backend.Api.csproj -c Release -o /app/publish
+RUN dotnet publish Gsl.Info.Cadastrais.Api.csproj -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
