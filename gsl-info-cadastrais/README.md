@@ -15,6 +15,8 @@ O projeto está desenvolvido em .Net Core e para o seu funcionamento são recome
 
 Para executar o projeto é necessário que uma instância do Sql Server esteja disponível na porta 1433 juntamente com a aplicação. Caso isso não ocorra, as credenciais de acesso ao banco podem ser alteradas no arquivo **launchSettings.json** do projeto de API.
 
+Além disso é importante executar o script **/scripts/CriarBancoInfoCadastrais.sql** para criar o banco e todas as tabelas relacionadas ao projeto.
+
 Em seguida, basta executar a aplicação via Visual Studio.
 
 ## Rotas do projeto

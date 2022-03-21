@@ -9,3 +9,12 @@
 /gsl-info-cadastrais/src/Gsl.Info.Cadastrais.Tests/obj
 /gsl-info-cadastrais/src/Gsl.Info.Cadastrais.Tests/bin
 /gsl-info-cadastrais/src/.vs
+/gsl-gestao-estrategica/src/.vs
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Api/obj
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Api/bin
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Application/obj
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Application/bin
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Domain/obj
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Domain/bin
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Infrastructure/bin
+/gsl-gestao-estrategica/src/Gsl.Gestao.Estrategica.Infrastructure/obj
