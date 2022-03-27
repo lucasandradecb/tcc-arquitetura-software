@@ -2,6 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Gsl.Gestao.Estrategica.Domain.Repositories;
 using Gsl.Gestao.Estrategica.Infrastructure.Repositories;
+using Gsl.Gestao.Estrategica.Infrastructure.Gateways.Interfaces;
+using Gsl.Gestao.Estrategica.Infrastructure.Gateways;
+using System;
 
 namespace Gsl.Gestao.Estrategica.Infrastructure
 {
@@ -21,8 +24,23 @@ namespace Gsl.Gestao.Estrategica.Infrastructure
             services.AddScoped<IDepositoRepository, DepositoRepository>();
             services.AddScoped<IMercadoriaRepository, MercadoriaRepository>();
             services.AddScoped<ISqlServerDbContext, SqlServerDbContext>();
+            services.AddScoped<IGslInfoCadastraisGateway, GslInfoCadastraisGateway>();
+
+            AdicionarGslInfoCadastraisGateway(services);
 
             return services;
+        }
+
+        /// <summary>
+        /// Adiciona  o GslInfoCadastraisGateway à configuração de serviços
+        /// </summary>
+        /// <param name="services"></param>
+        private static void AdicionarGslInfoCadastraisGateway(IServiceCollection services)
+        {
+            services.AddHttpClient<IGslInfoCadastraisGateway, GslInfoCadastraisGateway>(client =>
+            {
+                client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("URL_GSL_INFO_CADASTRAIS"));
+            });
         }
     }
 }

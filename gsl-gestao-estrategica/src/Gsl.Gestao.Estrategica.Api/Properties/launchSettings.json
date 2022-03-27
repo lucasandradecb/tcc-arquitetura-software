@@ -15,16 +15,18 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
+        "URL_GSL_INFO_CADASTRAIS": "",
+        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_gestao_estrategica; Trusted_Connection = True; MultipleActiveResultSets = True; "
       }
     },
     "Gsl.Gestao.Estrategica.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "environmentVariables": {        
-        "ASPNETCORE_ENVIRONMENT": "Development",        
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
+        "URL_GSL_INFO_CADASTRAIS": "",
+        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_gestao_estrategica; Trusted_Connection = True; MultipleActiveResultSets = True; "
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

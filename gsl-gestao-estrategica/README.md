@@ -3,7 +3,7 @@
 Desenvolvido por Lucas Andrade Maciel
 
 ## Objetivo
-Disponibilização de um projeto Web API para atender demandas relacionadas a gestão estrátegica da empresa com regitro de entregas e transações financeiras.
+Disponibilização de um projeto Web API para atender demandas relacionadas a gestão estrátegica da empresa com registro de entregas e transações financeiras.
 
 ## Pré Requisitos / Ferramentas
 O projeto está desenvolvido em .Net Core e para o seu funcionamento são recomendadas as seguintes ferramentas:
