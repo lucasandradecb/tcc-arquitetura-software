@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Flunt.Notifications;
+using System;
 
 namespace Gsl.Gestao.Estrategica.Infrastructure.Models
 {
     /// <summary>
     /// Modelo de dados da mercadoria
     /// </summary>
-    public class MercadoriaGatewayModel
+    public class MercadoriaGatewayModel : Notifiable
     {
         /// <summary>
         /// Codigo de identificação da mercadoria

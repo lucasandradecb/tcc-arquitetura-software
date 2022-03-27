@@ -15,7 +15,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "URL_GSL_INFO_CADASTRAIS": "",
+        "URL_GSL_INFO_CADASTRAIS": "https://localhost:44329/Gsl.Info.Cadastrais/api/",
         "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_gestao_estrategica; Trusted_Connection = True; MultipleActiveResultSets = True; "
       }
     },
@@ -25,7 +25,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "URL_GSL_INFO_CADASTRAIS": "",
+        "URL_GSL_INFO_CADASTRAIS": "https://localhost:44329/Gsl.Info.Cadastrais/api/",
         "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_gestao_estrategica; Trusted_Connection = True; MultipleActiveResultSets = True; "
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"

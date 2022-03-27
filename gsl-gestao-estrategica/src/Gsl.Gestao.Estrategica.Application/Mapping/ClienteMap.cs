@@ -2,6 +2,7 @@
 using Gsl.Gestao.Estrategica.Application.Models;
 using Gsl.Gestao.Estrategica.Domain.Entities;
 using Gsl.Gestao.Estrategica.Domain.ValueObjects;
+using Gsl.Gestao.Estrategica.Infrastructure.Models;
 
 namespace Gsl.Gestao.Estrategica.Application.Mapping
 {

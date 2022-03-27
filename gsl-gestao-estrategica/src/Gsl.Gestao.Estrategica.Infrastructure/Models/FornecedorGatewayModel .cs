@@ -1,9 +1,11 @@
-﻿namespace Gsl.Gestao.Estrategica.Infrastructure.Models
+﻿using Flunt.Notifications;
+
+namespace Gsl.Gestao.Estrategica.Infrastructure.Models
 {
     /// <summary>
     /// Modelo de dados de fornecedor
     /// </summary>
-    public class FornecedorGatewayModel
+    public class FornecedorGatewayModel : Notifiable
     {
         /// <summary>
         /// Nome do fornecedor

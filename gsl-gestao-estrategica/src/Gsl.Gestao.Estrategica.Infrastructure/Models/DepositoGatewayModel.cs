@@ -1,9 +1,11 @@
-﻿namespace Gsl.Gestao.Estrategica.Infrastructure.Models
+﻿using Flunt.Notifications;
+
+namespace Gsl.Gestao.Estrategica.Infrastructure.Models
 {
     /// <summary>
     /// Modelo de dados de deposito
     /// </summary>
-    public class DepositoGatewayModel
+    public class DepositoGatewayModel : Notifiable
     {
         /// <summary>
         /// Codigo de identificação do deposito

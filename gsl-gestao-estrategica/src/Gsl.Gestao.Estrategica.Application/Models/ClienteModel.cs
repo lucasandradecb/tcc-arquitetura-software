@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gsl.Gestao.Estrategica.Infrastructure.Models;
+using System;
 
 namespace Gsl.Gestao.Estrategica.Application.Models
 {

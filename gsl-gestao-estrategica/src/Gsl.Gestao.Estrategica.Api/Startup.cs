@@ -8,17 +8,13 @@ using Microsoft.OpenApi.Models;
 using Gsl.Gestao.Estrategica.Api.Filters;
 using Gsl.Gestao.Estrategica.Api.Logging;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Gsl.Gestao.Estrategica.Infrastructure;
 using Gsl.Gestao.Estrategica.Application;
-using Gsl.Gestao.Estrategica.Domain.Repositories;
-using Gsl.Gestao.Estrategica.Infrastructure.Repositories;
 using System.Text.Json.Serialization;
 
 namespace Gsl.Gestao.Estrategica.Api
 {
-    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -37,9 +33,6 @@ namespace Gsl.Gestao.Estrategica.Api
             services.AddMvc(options => options.Filters.Add(new DefaultExceptionFilterAttribute()));
 
             services.AddAutoMapper(typeof(ClienteApplication));
-            services.AddAutoMapper(typeof(FornecedorApplication));
-            services.AddAutoMapper(typeof(DepositoApplication));
-            services.AddAutoMapper(typeof(MercadoriaApplication));
 
             services.AddInfraServices();
 
