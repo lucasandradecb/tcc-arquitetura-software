@@ -18,7 +18,7 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class MercadoriaController : ApiBaseController
+    public class MercadoriasController : ApiBaseController
     {
         private readonly IMapper _mapper;
         private readonly IMercadoriaApplication _mercadoriaApplication;
@@ -28,7 +28,7 @@ namespace Gsl.Info.Cadastrais.Api.Controllers.v1
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="mercadoriaApplication"></param>
-        public MercadoriaController(IMapper mapper, IMercadoriaApplication mercadoriaApplication)
+        public MercadoriasController(IMapper mapper, IMercadoriaApplication mercadoriaApplication)
         {
             _mapper = mapper;
             _mercadoriaApplication = mercadoriaApplication;
