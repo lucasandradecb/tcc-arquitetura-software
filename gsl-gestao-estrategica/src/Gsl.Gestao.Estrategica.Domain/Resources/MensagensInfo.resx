@@ -135,7 +135,19 @@
   <data name="Estoque_NaoEncontrado" xml:space="preserve">
     <value>Não foi encontrado um estoque com o código informado!</value>
   </data>
+  <data name="Mercadoria_MaxQuantidade" xml:space="preserve">
+    <value>Erro ao atulizar a mercadoria {0} pois sua quantidade máxima no estoque é de {1}</value>
+  </data>
   <data name="Mercadoria_NaoEncontrada" xml:space="preserve">
     <value>Não foi encontrada uma mercadoria com o código informado!</value>
+  </data>
+  <data name="Pedido_ErroDeletar" xml:space="preserve">
+    <value>Erro ao deletar pedido com o código informado!</value>
+  </data>
+  <data name="Pedido_ErroDeletarItem" xml:space="preserve">
+    <value>Erro ao deletar item do pedido com o código informado!</value>
+  </data>
+  <data name="Pedido_NaoEncontrado" xml:space="preserve">
+    <value>Não foi encontrado um pedido com o código informado!</value>
   </data>
 </root>

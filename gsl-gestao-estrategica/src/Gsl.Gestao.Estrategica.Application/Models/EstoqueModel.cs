@@ -1,4 +1,7 @@
-﻿namespace Gsl.Gestao.Estrategica.Application.Models
+﻿using Gsl.Gestao.Estrategica.Infrastructure.Models;
+using System.Collections.Generic;
+
+namespace Gsl.Gestao.Estrategica.Application.Models
 {
     /// <summary>
     /// Modelo de dados de estoque
@@ -13,12 +16,8 @@
         /// </summary>
         public int DepositoCodigo { get; set; }
         /// <summary>
-        /// Codigo da mercadoria
+        /// Lista de mercadorias do estoque
         /// </summary>
-        public int MercadoriaCodigo { get; set; }
-        /// <summary>
-        /// Valor total do estoque
-        /// </summary>
-        public double ValorTotal { get; set; }
+        public List<MercadoriaGatewayModel> ListaMercadorias { get; set; }
     }
 }

@@ -11,39 +11,33 @@ using Gsl.Gestao.Estrategica.Domain.ValueObjects;
 namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
 {
     /// <summary>
-    /// Repositório de estoques
+    /// Repositório de pedidos
     /// </summary>
-    public class EstoqueRepository : IEstoqueRepository
+    public class PedidoRepository : IPedidoRepository
     {
         private ISqlServerDbContext SqlServerDbContext { get; }
 
-        public EstoqueRepository(ISqlServerDbContext sqlServerDbContext)
+        public PedidoRepository(ISqlServerDbContext sqlServerDbContext)
         {
             SqlServerDbContext = sqlServerDbContext;
         }
 
-        public async Task<bool> VerificarSeExiste(Estoque estoque, CancellationToken ctx)
-        {
-            var estoqueExistente = await ObterPorCodigo(estoque.Codigo, ctx);
-
-            return estoqueExistente?.Codigo == estoque.Codigo;
-        }
-        public Task Salvar(Estoque estoque, CancellationToken ctx)
+        public Task Salvar(Pedido pedido, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Estoque> ObterPorCodigo(int codigo, CancellationToken ctx)
+        public Task<Pedido> ObterPorCodigo(int codigo, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Estoque>> ListarTodos(CancellationToken ctx)
+        public Task<List<Pedido>> ListarTodos(CancellationToken ctx)
         {
             throw new NotImplementedException();
         }
 
-        public Task Atualizar(Estoque estoque, CancellationToken ctx)
+        public Task Atualizar(Pedido pedido, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }
@@ -52,8 +46,19 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> VerificarSeExiste(Pedido pedido, CancellationToken ctx)
+        {
+            var pedidoExistente = await ObterPorCodigo(pedido.Codigo, ctx);
 
-        public Task AtualizaQuantidadeMercadoria(Estoque estoque, CancellationToken ctx)
+            return pedidoExistente?.Codigo == pedido.Codigo;
+        }
+
+        public Task SalvarItem(ItemPedido itemPedido, CancellationToken ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeletarItem(int codigo, CancellationToken ctx)
         {
             throw new NotImplementedException();
         }

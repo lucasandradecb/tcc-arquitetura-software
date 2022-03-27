@@ -18,8 +18,15 @@ namespace Gsl.Gestao.Estrategica.Application.Mapping
             CreateMap<Estoque, EstoqueModel>()
                 .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
                 .ForMember(dest => dest.DepositoCodigo, m => m.MapFrom(src => src.DepositoCodigo))                
-                .ForMember(dest => dest.MercadoriaCodigo, m => m.MapFrom(src => src.MercadoriaCodigo))
-                .ForMember(dest => dest.ValorTotal, m => m.MapFrom(src => src.ValorTotal))
+                .ForMember(dest => dest.ListaMercadorias, m => m.MapFrom(src => src.ListaMercadorias))
+                .ReverseMap();
+
+            CreateMap<Mercadoria, MercadoriaGatewayModel>()
+                .ForMember(dest => dest.Quantidade, m => m.MapFrom(src => src.Quantidade))
+                .ForMember(dest => dest.Valor, m => m.MapFrom(src => src.Valor))
+                .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
+                .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome))
+                .ForMember(dest => dest.FornecedorId, m => m.MapFrom(src => src.FornecedorId))
                 .ReverseMap();
         }
     }

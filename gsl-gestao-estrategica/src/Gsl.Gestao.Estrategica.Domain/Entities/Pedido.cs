@@ -5,40 +5,45 @@ using Gsl.Gestao.Estrategica.Domain.Entities.Core;
 namespace Gsl.Gestao.Estrategica.Domain.Entities
 {
     /// <summary>
-    /// Classe da entidade de Estoque
+    /// Classe da entidade de Pedido
     /// </summary>
-    public class Estoque : Entity
+    public class Pedido : Entity
     {
         /// <summary>
-        /// Construtor padrão de Estoque
+        /// Construtor padrão de Pedido
         /// </summary>
-        public Estoque() { }
+        public Pedido() { }
 
         /// <summary>
-        /// Construtor de Estoque
+        /// Construtor de pedido
         /// </summary>
         /// <param name="codigo"></param>
-        /// <param name="depositoCodigo"></param>
-        /// <param name="mercadoriaCodigo"></param>
-        public Estoque(int codigo, int depositoCodigo)
+        /// <param name="clienteCpf"></param>
+        /// <param name="valorTotal"></param>
+        public Pedido(int codigo, string clienteCpf, double valorTotal)
         {
             Codigo = codigo;
-            DepositoCodigo = depositoCodigo;            
+            ClienteCpf = clienteCpf;
+            ValorTotal = valorTotal;
             DataCriacao = DateTime.UtcNow;      
         }
 
         /// <summary>
-        /// Codigo do estoque
+        /// Codigo do pedido
         /// </summary>
         public int Codigo { get; set; }
         /// <summary>
-        /// Codigo do deposito
+        /// Cof do cliente
         /// </summary>
-        public int DepositoCodigo { get; set; }
+        public string ClienteCpf { get; set; }
         /// <summary>
-        /// Codigo da mercadoria
+        /// Item de um pedido
         /// </summary>
-        public List<Mercadoria> ListaMercadorias { get; set; }
+        public IEnumerable<ItemPedido> ItensPedido { get; set; }        
+        /// <summary>
+        /// Valor total do pedido
+        /// </summary>
+        public double ValorTotal { get; set; }
         /// <summary>
         /// Data de criação do registro
         /// </summary>

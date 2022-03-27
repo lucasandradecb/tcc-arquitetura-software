@@ -115,11 +115,47 @@ namespace Gsl.Gestao.Estrategica.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erro ao atulizar a mercadoria {0} pois sua quantidade máxima no estoque é de {1}.
+        /// </summary>
+        public static string Mercadoria_MaxQuantidade {
+            get {
+                return ResourceManager.GetString("Mercadoria_MaxQuantidade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi encontrada uma mercadoria com o código informado!.
         /// </summary>
         public static string Mercadoria_NaoEncontrada {
             get {
                 return ResourceManager.GetString("Mercadoria_NaoEncontrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar pedido com o código informado!.
+        /// </summary>
+        public static string Pedido_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Pedido_ErroDeletar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar item do pedido com o código informado!.
+        /// </summary>
+        public static string Pedido_ErroDeletarItem {
+            get {
+                return ResourceManager.GetString("Pedido_ErroDeletarItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi encontrado um pedido com o código informado!.
+        /// </summary>
+        public static string Pedido_NaoEncontrado {
+            get {
+                return ResourceManager.GetString("Pedido_NaoEncontrado", resourceCulture);
             }
         }
     }

@@ -87,15 +87,6 @@ namespace Gsl.Gestao.Estrategica.Application
         /// <returns></returns>
         public async Task<Result<Estoque>> CadastrarEstoque(EstoqueModel estoqueModel, CancellationToken ctx)
         {
-            var infoCadastraisOutput = await _gslInfoCadastraisGateway.ObterMercadoria(estoqueModel.MercadoriaCodigo, ctx);
-            if (infoCadastraisOutput == null)
-            {
-                var notification = new List<Notification> { new Notification(nameof(Estoque.MercadoriaCodigo), MensagensInfo.Mercadoria_NaoEncontrada) };
-                return Result<Estoque>.Error(notification);
-            }
-
-            estoqueModel.ValorTotal = Convert.ToDouble(infoCadastraisOutput.Quantidade) * infoCadastraisOutput.Valor;
-
             var estoque = _mapper.Map<EstoqueModel, Estoque>(estoqueModel);
 
             if (estoque.Valid)
@@ -145,7 +136,7 @@ namespace Gsl.Gestao.Estrategica.Application
         #region Deletar
 
         /// <summary>
-        /// Deleta um deposito pelo codigo
+        /// Deleta um estoque pelo codigo
         /// </summary>
         /// <param name="codigo"></param>
         /// <param name="ctx"></param>

@@ -34,6 +34,7 @@ namespace Gsl.Gestao.Estrategica.Api
 
             services.AddAutoMapper(typeof(ClienteApplication));
             services.AddAutoMapper(typeof(EstoqueApplication));
+            services.AddAutoMapper(typeof(PedidoApplication));
 
             services.AddInfraServices();
 
