@@ -1,4 +1,6 @@
-﻿namespace Gsl.Info.Cadastrais.Application.Models
+﻿using System;
+
+namespace Gsl.Info.Cadastrais.Application.Models
 {
     /// <summary>
     /// Modelo de dados da mercadoria
@@ -20,6 +22,10 @@
         /// <summary>
         /// Quantidade da mercadoria
         /// </summary>
-        public int Quantidade { get; set; }  
+        public int Quantidade { get; set; }
+        /// <summary>
+        /// Id do Fornecedor
+        /// </summary>
+        public Guid FornecedorId { get; set; }
     }
 }

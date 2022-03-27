@@ -7,9 +7,11 @@ CREATE TABLE Mercadoria (id UNIQUEIDENTIFIER NOT NULL,
 						 nome NVARCHAR(200), 
 						 quantidade INT, 
 						 valor DECIMAL(18,2), 
+						 FornecedorId UNIQUEIDENTIFIER,
 						 datacriacao DATETIME, 
 						 dataatualizacao DATETIME, 
-						 PRIMARY KEY (id))
+						 PRIMARY KEY (id),
+						 FOREIGN KEY (FornecedorId) REFERENCES Fornecedor(id))
 
 CREATE TABLE Fornecedor (id UNIQUEIDENTIFIER NOT NULL,
 						cnpj NVARCHAR(30),

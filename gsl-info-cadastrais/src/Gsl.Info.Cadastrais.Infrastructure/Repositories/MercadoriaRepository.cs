@@ -28,6 +28,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 					nome,
 					quantidade,
 					valor,
+                    fornecedorId,
 					datacriacao)
 				VALUES 
 					(@Id,
@@ -35,6 +36,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 					@Nome,
 					@Quantidade,
 					@Valor,
+                    @FornecedorId,
 					@DataCriacao)";
 
             using var connection = SqlServerDbContext.GetConnection();
@@ -51,6 +53,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 					nome,
 					quantidade,
 					valor,
+                    fornecedorId,
 					datacriacao,
                     dataatualizacao
                 FROM Mercadoria
@@ -77,6 +80,7 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 					nome,
 					quantidade,
 					valor,
+                    fornecedorId,
 					datacriacao,
                     dataatualizacao
                 FROM Mercadoria

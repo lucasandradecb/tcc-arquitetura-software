@@ -21,12 +21,14 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// <param name="nome"></param>
         /// <param name="valor"></param>     
         /// <param name="quantidade"></param>
-        public Mercadoria(int codigo, string nome, double valor, int quantidade)
+        /// <param name="fornecedorId"></param>
+        public Mercadoria(int codigo, string nome, double valor, int quantidade, Guid fornecedorId)
         {
             Codigo = codigo;
             Nome = nome;
             Valor = valor;
             Quantidade = quantidade;
+            FornecedorId = fornecedorId;
             DataCriacao = DateTime.UtcNow;            
 
             AddNotifications(new Contract()
@@ -50,6 +52,10 @@ namespace Gsl.Info.Cadastrais.Domain.Entities
         /// quantidade de mercadoria
         /// </summary>
         public int Quantidade { get; set; }
+        /// <summary>
+        /// Id do fornecedor
+        /// </summary>
+        public Guid FornecedorId { get; set; }
         /// <summary>
         /// Data de criação do registro
         /// </summary>

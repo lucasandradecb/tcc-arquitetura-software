@@ -19,6 +19,7 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                 .ForMember(dest => dest.Valor, m => m.MapFrom(src => src.Valor))              
                 .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome))
+                .ForMember(dest => dest.FornecedorId, m => m.MapFrom(src => src.FornecedorId))
                 .ReverseMap();
         }
     }
