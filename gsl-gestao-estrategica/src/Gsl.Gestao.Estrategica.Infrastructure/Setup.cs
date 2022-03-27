@@ -22,6 +22,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IEstoqueRepository, EstoqueRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IEntregaRepository, EntregaRepository>();
             services.AddScoped<ISqlServerDbContext, SqlServerDbContext>();
             services.AddScoped<IGslInfoCadastraisGateway, GslInfoCadastraisGateway>();
 

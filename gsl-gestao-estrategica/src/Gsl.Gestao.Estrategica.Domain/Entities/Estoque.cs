@@ -19,11 +19,12 @@ namespace Gsl.Gestao.Estrategica.Domain.Entities
         /// </summary>
         /// <param name="codigo"></param>
         /// <param name="depositoCodigo"></param>
-        /// <param name="mercadoriaCodigo"></param>
-        public Estoque(int codigo, int depositoCodigo)
+        /// <param name="listaMercadorias"></param>
+        public Estoque(int codigo, int depositoCodigo, List<Mercadoria> listaMercadorias)
         {
             Codigo = codigo;
-            DepositoCodigo = depositoCodigo;            
+            DepositoCodigo = depositoCodigo;
+            ListaMercadorias = listaMercadorias;
             DataCriacao = DateTime.UtcNow;      
         }
 

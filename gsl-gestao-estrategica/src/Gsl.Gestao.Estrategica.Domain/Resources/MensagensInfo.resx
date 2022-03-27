@@ -126,6 +126,15 @@
   <data name="Cliente_NaoEncontrado" xml:space="preserve">
     <value>Não foi encontrado cliente com o CPF informado!</value>
   </data>
+  <data name="Entrega_CodigoExistente" xml:space="preserve">
+    <value>Já existe uma entrega cadastrada com o código informado.</value>
+  </data>
+  <data name="Entrega_ErroDeletar" xml:space="preserve">
+    <value>Erro ao deletar entrega com o código informado!</value>
+  </data>
+  <data name="Entrega_NaoEncontrada" xml:space="preserve">
+    <value>Não foi encontrada uma entrega com o código informado!</value>
+  </data>
   <data name="Estoque_CodigoExiste" xml:space="preserve">
     <value>Já existe um estoque cadastrado com o código informado.</value>
   </data>

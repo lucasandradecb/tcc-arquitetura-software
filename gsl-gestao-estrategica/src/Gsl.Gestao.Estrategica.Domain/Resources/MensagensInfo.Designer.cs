@@ -88,6 +88,33 @@ namespace Gsl.Gestao.Estrategica.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe uma entrega cadastrada com o código informado..
+        /// </summary>
+        public static string Entrega_CodigoExistente {
+            get {
+                return ResourceManager.GetString("Entrega_CodigoExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao deletar entrega com o código informado!.
+        /// </summary>
+        public static string Entrega_ErroDeletar {
+            get {
+                return ResourceManager.GetString("Entrega_ErroDeletar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi encontrada uma entrega com o código informado!.
+        /// </summary>
+        public static string Entrega_NaoEncontrada {
+            get {
+                return ResourceManager.GetString("Entrega_NaoEncontrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Já existe um estoque cadastrado com o código informado..
         /// </summary>
         public static string Estoque_CodigoExiste {

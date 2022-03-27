@@ -16,6 +16,7 @@ namespace Gsl.Gestao.Estrategica.Application
             services.AddScoped<IClienteApplication, ClienteApplication>();
             services.AddScoped<IEstoqueApplication, EstoqueApplication>();
             services.AddScoped<IPedidoApplication, PedidoApplication>();
+            services.AddScoped<IEntregaApplication, EntregaApplication>();
 
             return services;
         }

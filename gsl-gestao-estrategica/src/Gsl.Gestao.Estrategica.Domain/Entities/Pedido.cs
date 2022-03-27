@@ -20,11 +20,13 @@ namespace Gsl.Gestao.Estrategica.Domain.Entities
         /// <param name="codigo"></param>
         /// <param name="clienteCpf"></param>
         /// <param name="valorTotal"></param>
-        public Pedido(int codigo, string clienteCpf, double valorTotal)
+        /// <param name="itensPedido"></param>
+        public Pedido(int codigo, string clienteCpf, double valorTotal, List<ItemPedido> itensPedido)
         {
             Codigo = codigo;
             ClienteCpf = clienteCpf;
             ValorTotal = valorTotal;
+            ItensPedido = itensPedido;
             DataCriacao = DateTime.UtcNow;      
         }
 
@@ -39,7 +41,7 @@ namespace Gsl.Gestao.Estrategica.Domain.Entities
         /// <summary>
         /// Item de um pedido
         /// </summary>
-        public IEnumerable<ItemPedido> ItensPedido { get; set; }        
+        public List<ItemPedido> ItensPedido { get; set; }        
         /// <summary>
         /// Valor total do pedido
         /// </summary>
