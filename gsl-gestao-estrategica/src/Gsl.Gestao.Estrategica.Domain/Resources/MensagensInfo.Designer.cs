@@ -88,74 +88,29 @@ namespace Gsl.Gestao.Estrategica.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Já existe um depósito cadastrado com o código informado..
+        ///   Looks up a localized string similar to Já existe um estoque cadastrado com o código informado..
         /// </summary>
-        public static string Deposito_CodigoExiste {
+        public static string Estoque_CodigoExiste {
             get {
-                return ResourceManager.GetString("Deposito_CodigoExiste", resourceCulture);
+                return ResourceManager.GetString("Estoque_CodigoExiste", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erro ao deletar depósito com o código informado!.
+        ///   Looks up a localized string similar to Erro ao deletar estoque com o código informado!.
         /// </summary>
-        public static string Deposito_ErroDeletar {
+        public static string Estoque_ErroDeletar {
             get {
-                return ResourceManager.GetString("Deposito_ErroDeletar", resourceCulture);
+                return ResourceManager.GetString("Estoque_ErroDeletar", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi encontrado um depósito com o código informado!.
+        ///   Looks up a localized string similar to Não foi encontrado um estoque com o código informado!.
         /// </summary>
-        public static string Deposito_NaoEncontrado {
+        public static string Estoque_NaoEncontrado {
             get {
-                return ResourceManager.GetString("Deposito_NaoEncontrado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Já existe um fornecedor cadastrado com o CNPJ informado..
-        /// </summary>
-        public static string Fornecedor_CpnjExiste {
-            get {
-                return ResourceManager.GetString("Fornecedor_CpnjExiste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erro ao deletar fornecedor com o CNPJ informado!.
-        /// </summary>
-        public static string Fornecedor_ErroDeletar {
-            get {
-                return ResourceManager.GetString("Fornecedor_ErroDeletar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Não foi encontrado fornecedor com o CNPJ informado..
-        /// </summary>
-        public static string Fornecedor_NaoEncontrado {
-            get {
-                return ResourceManager.GetString("Fornecedor_NaoEncontrado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Já existe uma mercadoria cadastrada com o código informado..
-        /// </summary>
-        public static string Mercadoria_CodigoExiste {
-            get {
-                return ResourceManager.GetString("Mercadoria_CodigoExiste", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erro ao deletar mercadoria com o código informado!.
-        /// </summary>
-        public static string Mercadoria_ErroDeletar {
-            get {
-                return ResourceManager.GetString("Mercadoria_ErroDeletar", resourceCulture);
+                return ResourceManager.GetString("Estoque_NaoEncontrado", resourceCulture);
             }
         }
         

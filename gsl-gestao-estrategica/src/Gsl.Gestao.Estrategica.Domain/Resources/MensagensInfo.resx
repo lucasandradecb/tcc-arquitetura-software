@@ -126,29 +126,14 @@
   <data name="Cliente_NaoEncontrado" xml:space="preserve">
     <value>Não foi encontrado cliente com o CPF informado!</value>
   </data>
-  <data name="Deposito_CodigoExiste" xml:space="preserve">
-    <value>Já existe um depósito cadastrado com o código informado.</value>
+  <data name="Estoque_CodigoExiste" xml:space="preserve">
+    <value>Já existe um estoque cadastrado com o código informado.</value>
   </data>
-  <data name="Deposito_ErroDeletar" xml:space="preserve">
-    <value>Erro ao deletar depósito com o código informado!</value>
+  <data name="Estoque_ErroDeletar" xml:space="preserve">
+    <value>Erro ao deletar estoque com o código informado!</value>
   </data>
-  <data name="Deposito_NaoEncontrado" xml:space="preserve">
-    <value>Não foi encontrado um depósito com o código informado!</value>
-  </data>
-  <data name="Fornecedor_CpnjExiste" xml:space="preserve">
-    <value>Já existe um fornecedor cadastrado com o CNPJ informado.</value>
-  </data>
-  <data name="Fornecedor_ErroDeletar" xml:space="preserve">
-    <value>Erro ao deletar fornecedor com o CNPJ informado!</value>
-  </data>
-  <data name="Fornecedor_NaoEncontrado" xml:space="preserve">
-    <value>Não foi encontrado fornecedor com o CNPJ informado.</value>
-  </data>
-  <data name="Mercadoria_CodigoExiste" xml:space="preserve">
-    <value>Já existe uma mercadoria cadastrada com o código informado.</value>
-  </data>
-  <data name="Mercadoria_ErroDeletar" xml:space="preserve">
-    <value>Erro ao deletar mercadoria com o código informado!</value>
+  <data name="Estoque_NaoEncontrado" xml:space="preserve">
+    <value>Não foi encontrado um estoque com o código informado!</value>
   </data>
   <data name="Mercadoria_NaoEncontrada" xml:space="preserve">
     <value>Não foi encontrada uma mercadoria com o código informado!</value>

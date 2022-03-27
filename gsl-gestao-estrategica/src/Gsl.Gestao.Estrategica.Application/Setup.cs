@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
 using Gsl.Gestao.Estrategica.Application.Interfaces;
 
 namespace Gsl.Gestao.Estrategica.Application
@@ -7,7 +6,6 @@ namespace Gsl.Gestao.Estrategica.Application
     /// <summary>
     /// Setup da Application
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public static class Setup
     {
         /// <summary>
@@ -16,6 +14,7 @@ namespace Gsl.Gestao.Estrategica.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IClienteApplication, ClienteApplication>();
+            services.AddScoped<IEstoqueApplication, EstoqueApplication>();
 
             return services;
         }

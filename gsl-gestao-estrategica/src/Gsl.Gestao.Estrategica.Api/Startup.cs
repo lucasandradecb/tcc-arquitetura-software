@@ -33,6 +33,7 @@ namespace Gsl.Gestao.Estrategica.Api
             services.AddMvc(options => options.Filters.Add(new DefaultExceptionFilterAttribute()));
 
             services.AddAutoMapper(typeof(ClienteApplication));
+            services.AddAutoMapper(typeof(EstoqueApplication));
 
             services.AddInfraServices();
 
