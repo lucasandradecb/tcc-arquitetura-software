@@ -15,7 +15,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
+        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS02; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
       }
     },
     "Gsl.Info.Cadastrais.Api": {
@@ -24,7 +24,7 @@
       "environmentVariables": {        
         "ASPNETCORE_ENVIRONMENT": "Development",        
         "RETURN_DEFAULT_EXCEPTION": "false",
-        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
+        "SQL_CONNECTION_STRING": "Server = localhost\\SQLEXPRESS02; Database = db_info_cadastrais; Trusted_Connection = True; MultipleActiveResultSets = True; "
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

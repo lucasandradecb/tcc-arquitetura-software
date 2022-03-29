@@ -9,7 +9,7 @@ namespace Gsl.Info.Cadastrais.Domain.Entities.Core
         public virtual Guid Id
         {
             get => _id;
-            protected set => _id = value;
+            set => _id = value == Guid.Empty ? Guid.NewGuid() : value;
         }
 
         protected Entity() => Id = Guid.NewGuid();

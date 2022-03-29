@@ -1,10 +1,16 @@
-﻿namespace Gsl.Info.Cadastrais.Application.Models
+﻿using System;
+
+namespace Gsl.Info.Cadastrais.Application.Models
 {
     /// <summary>
     /// Modelo de dados de fornecedor
     /// </summary>
     public class FornecedorModel
     {
+        /// <summary>
+        /// Id do fornecedor
+        /// </summary>
+        public Guid Id { get; set; }
         /// <summary>
         /// Nome do fornecedor
         /// </summary>

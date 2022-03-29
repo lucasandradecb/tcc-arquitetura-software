@@ -35,8 +35,8 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
                     complemento = @Complemento,
                     cidade = @Cidade,
                     estado = @Estado,
-                  dataatualizacao = GETDATE()     
-                WHERE cnpj = @Cnpj";
+                    dataatualizacao = GETDATE()     
+                  WHERE cnpj = @Cnpj";
 
             using var connection = SqlServerDbContext.GetConnection();
 
@@ -189,13 +189,16 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
             double longitude = Convert.ToDouble(select.longitude);
             string nome = select.nome;
 
-            return new Fornecedor(
-                        nome,
-                        cnpj,
-                        endereco,
-                        latitude,
-                        longitude
-                    );
+            var fornecedor = new Fornecedor(
+                                nome,
+                                cnpj,
+                                endereco,
+                                latitude,
+                                longitude
+                            );
+
+            fornecedor.Id = select.id;
+            return fornecedor;
         }
 
         #endregion

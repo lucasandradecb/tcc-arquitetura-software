@@ -16,6 +16,7 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
         public FornecedorMap()
         {
             CreateMap<Fornecedor, FornecedorModel>()
+                .ForMember(dest => dest.Id, m => m.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
                 .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.MapFrom(src => src.Endereco))                
@@ -32,6 +33,7 @@ namespace Gsl.Info.Cadastrais.Application.Mapping
                 .ReverseMap();
 
             CreateMap<FornecedorModel, Fornecedor>()
+                .ForMember(dest => dest.Id, m => m.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Latitude, m => m.MapFrom(src => src.Latitude))
                 .ForMember(dest => dest.Longitude, m => m.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.Endereco, m => m.Ignore())

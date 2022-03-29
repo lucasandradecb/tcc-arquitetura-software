@@ -22,13 +22,13 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
         public async Task Salvar(Mercadoria mercadoria, CancellationToken ctx)
         {
             var sqlInsert =
-                @"INSERT INTO Mercadoria
+                $@"INSERT INTO Mercadoria
 					(id,
 					codigo,
 					nome,
 					quantidade,
 					valor,
-                    fornecedorId,
+                    fornecedorid,
 					datacriacao)
 				VALUES 
 					(@Id,
@@ -41,7 +41,16 @@ namespace Gsl.Info.Cadastrais.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
-            await connection.ExecuteAsync(sqlInsert, mercadoria);
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", mercadoria.Id, System.Data.DbType.Guid);
+            parameters.Add("@Codigo", mercadoria.Codigo, System.Data.DbType.Int32);
+            parameters.Add("@Nome", mercadoria.Nome, System.Data.DbType.AnsiString);
+            parameters.Add("@Quantidade", mercadoria.Quantidade, System.Data.DbType.Int32);
+            parameters.Add("@Valor", mercadoria.Valor, System.Data.DbType.Decimal);
+            parameters.Add("@FornecedorId", mercadoria.FornecedorId, System.Data.DbType.Guid);
+            parameters.Add("@DataCriacao", mercadoria.DataCriacao, System.Data.DbType.DateTime);
+
+            await connection.ExecuteAsync(sqlInsert, parameters);
         }
 
         public async Task<Mercadoria> ObterPorCodigo(int codigo, CancellationToken ctx)
