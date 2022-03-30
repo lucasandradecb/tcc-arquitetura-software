@@ -6,11 +6,11 @@ using Gsl.Gestao.Estrategica.Application.Models;
 using Gsl.Gestao.Estrategica.Domain.Entities;
 using Gsl.Gestao.Estrategica.Domain.Repositories;
 using Gsl.Gestao.Estrategica.Domain.Resources;
-using Gsl.Gestao.Estrategica.Domain.ValueObjects;
 using Flunt.Notifications;
 using System.Collections.Generic;
 using System;
 using Gsl.Gestao.Estrategica.Infrastructure.Gateways.Interfaces;
+using Gsl.Gestao.Estrategica.Infrastructure.Models;
 
 namespace Gsl.Gestao.Estrategica.Application
 {
@@ -70,9 +70,29 @@ namespace Gsl.Gestao.Estrategica.Application
             }
 
             output = _mapper.Map<Estoque, EstoqueModel>(estoque);
+            output.ListaMercadorias = await ObterMercadoriasCadastradas(estoque, ctx);
 
             return Result<EstoqueModel>.Ok(output);
 
+        }
+
+        /// <summary>
+        /// Obtém as mercadorias existentes na API de dados cadastrais 
+        /// </summary>
+        /// <param name="estoque"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        private async Task<List<MercadoriaGatewayModel>> ObterMercadoriasCadastradas(Estoque estoque, CancellationToken ctx)
+        {
+            var listaMercadoriasGateway = new List<MercadoriaGatewayModel>();
+            foreach (var item in estoque.ListaMercadorias)
+            {
+                var mercadoriaOutput = await _gslInfoCadastraisGateway.ObterMercadoria(item.Codigo, ctx);
+                if (mercadoriaOutput != null)
+                    listaMercadoriasGateway.Add(mercadoriaOutput);
+            }
+
+            return listaMercadoriasGateway;
         }
 
         #endregion
@@ -91,13 +111,8 @@ namespace Gsl.Gestao.Estrategica.Application
 
             if (estoque.Valid)
             {
-                if (!await _estoqueRepository.VerificarSeExiste(estoque, ctx))
-                {
-                    await _estoqueRepository.Salvar(estoque, ctx);
-                    return Result<Estoque>.Ok(estoque);
-                }
-
-                estoque.AddNotification(nameof(Estoque.Codigo), MensagensInfo.Estoque_CodigoExiste);
+                await _estoqueRepository.Salvar(estoque, ctx);
+                return Result<Estoque>.Ok(estoque);         
             }
 
             return Result<Estoque>.Error(estoque.Notifications);

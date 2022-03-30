@@ -38,12 +38,12 @@ namespace Gsl.Gestao.Estrategica.Domain.Repositories
         /// <param name="ctx"></param>
         Task Atualizar(Pedido pedido, CancellationToken ctx);
         /// <summary>
-        /// Deleta o pedido pelo codigo
+        /// Deleta o pedido 
         /// </summary>
-        /// <param name="codigo"></param>
+        /// <param name="pedido"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task Deletar(int codigo, CancellationToken ctx);
+        Task Deletar(Pedido pedido, CancellationToken ctx);
         /// <summary>
         /// Verifica se o pedido já existe no banco
         /// </summary>

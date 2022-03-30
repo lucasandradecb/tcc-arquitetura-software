@@ -178,7 +178,8 @@ namespace Gsl.Gestao.Estrategica.Application
         {
             try
             {
-                await _pedidoRepository.Deletar(codigo, ctx);
+                var pedido = await _pedidoRepository.ObterPorCodigo(codigo, ctx);
+                await _pedidoRepository.Deletar(pedido, ctx);
             }
             catch (Exception)
             {

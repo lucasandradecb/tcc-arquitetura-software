@@ -18,11 +18,10 @@ namespace Gsl.Gestao.Estrategica.Domain.Entities
         /// Construtor de ItemPedido
         /// </summary>
         /// <param name="codigo"></param>
-        /// <param name="clienteCpf"></param>
         /// <param name="mercadoriaCodigo"></param>
         /// <param name="mercadoriaQuantidade"></param>
         /// <param name="valor"></param>
-        public ItemPedido(int codigo, string clienteCpf, int mercadoriaCodigo, int mercadoriaQuantidade, double valor)
+        public ItemPedido(int codigo, int mercadoriaCodigo, int mercadoriaQuantidade, double valor)
         {
             Codigo = codigo;
             MercadoriaCodigo = mercadoriaCodigo;

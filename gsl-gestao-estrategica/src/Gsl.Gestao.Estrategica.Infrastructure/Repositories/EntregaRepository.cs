@@ -49,9 +49,15 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Deletar(string codigo, CancellationToken ctx)
+        public async Task Deletar(string codigo, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+             $@"DELETE FROM Entrega
+				 WHERE codigo = @{nameof(codigo)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, new { codigo });
         }
     }
 }

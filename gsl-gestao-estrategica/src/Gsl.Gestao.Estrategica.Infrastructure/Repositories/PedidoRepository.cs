@@ -42,9 +42,18 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Deletar(int codigo, CancellationToken ctx)
+        public async Task Deletar(Pedido pedido, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            foreach (var item in pedido.ItensPedido)
+                await DeletarItem(item.Codigo, ctx);
+
+            var sqlInsert =
+             $@"DELETE FROM Pedido
+				 WHERE codigo = @{nameof(pedido.Codigo)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, new { pedido.Codigo });
         }
         public async Task<bool> VerificarSeExiste(Pedido pedido, CancellationToken ctx)
         {
@@ -58,9 +67,15 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task DeletarItem(int codigo, CancellationToken ctx)
+        public async Task DeletarItem(int codigo, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+             $@"DELETE FROM ItemPedido
+				 WHERE codigo = @{nameof(codigo)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, new { codigo });
         }
     }
 }

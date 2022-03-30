@@ -50,13 +50,6 @@ namespace Gsl.Gestao.Estrategica.Domain.Repositories
         /// <param name="estoque"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<bool> VerificarSeExiste(Estoque estoque, CancellationToken ctx);
-        /// <summary>
-        /// Atualiza quantidade de uma mercadoria no estoque
-        /// </summary>
-        /// <param name="estoque"></param>
-        /// <param name="ctx"></param>
-        /// <returns></returns>
-        Task AtualizaQuantidadeMercadoria(Estoque estoque, CancellationToken ctx);
+        Task<bool> VerificarSeExiste(Estoque estoque, CancellationToken ctx);        
     }
 }

@@ -28,34 +28,123 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
 
             return estoqueExistente?.Codigo == estoque.Codigo;
         }
-        public Task Salvar(Estoque estoque, CancellationToken ctx)
+
+        public async Task Salvar(Estoque estoque, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                $@"INSERT INTO Estoque
+					(id,
+					codigo,
+					depositocodigo,
+					mercadoriacodigo,
+					datacriacao)
+				VALUES 
+					(@Id,
+					@Codigo,
+					@DepositoCodigo,
+					@MercadoriaCodigo,
+					@DataCriacao)";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            DynamicParameters parameters = new DynamicParameters();            
+            parameters.Add("@Codigo", estoque.Codigo, System.Data.DbType.Int32);
+            parameters.Add("@DepositoCodigo", estoque.DepositoCodigo, System.Data.DbType.Int32);            
+            parameters.Add("@DataCriacao", estoque.DataCriacao, System.Data.DbType.DateTime);
+
+            foreach (var item in estoque.ListaMercadorias)
+            {
+                parameters.Add("@Id", Guid.NewGuid(), System.Data.DbType.Guid);
+                parameters.Add("@MercadoriaCodigo", item.Codigo, System.Data.DbType.Int32);
+                await connection.ExecuteAsync(sqlInsert, parameters);
+            }            
         }
 
-        public Task<Estoque> ObterPorCodigo(int codigo, CancellationToken ctx)
+        public async Task<Estoque> ObterPorCodigo(int codigo, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                 $@"SELECT 
+                	id,
+					codigo,
+					depositocodigo AS DepositoCodigo,
+					mercadoriacodigo AS MercadoriaCodigo,
+					datacriacao,
+                    dataatualizacao
+                FROM Estoque
+                WHERE codigo = @{nameof(codigo)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            var listaDinamica = await connection.QueryAsync<dynamic>(sqlInsert, new { codigo });
+
+            return ConverterSelectToEstoque(listaDinamica).FirstOrDefault();
         }
 
-        public Task<List<Estoque>> ListarTodos(CancellationToken ctx)
+        public async Task<List<Estoque>> ListarTodos(CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                 $@"SELECT 
+                	id,
+					codigo,
+					depositocodigo AS DepositoCodigo,
+					mercadoriacodigo AS MercadoriaCodigo,
+					datacriacao,
+                    dataatualizacao
+                FROM Estoque
+                ORDER BY codigo DESC";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            var listaDinamica = await connection.QueryAsync<dynamic>(sqlInsert);
+                      
+            return ConverterSelectToEstoque(listaDinamica);
         }
 
-        public Task Atualizar(Estoque estoque, CancellationToken ctx)
+        public async Task Atualizar(Estoque estoque, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+                $@"UPDATE Estoque SET
+                  depositocodigo = @DepositoCodigo,				  
+                  dataatualizacao = GETDATE()     
+                WHERE codigo = @Codigo AND mercadoriacodigo = @MercadoriaCodigo";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", estoque.Id, System.Data.DbType.Guid);
+            parameters.Add("@Codigo", estoque.Codigo, System.Data.DbType.Int32);
+            parameters.Add("@DepositoCodigo", estoque.DepositoCodigo, System.Data.DbType.Int32);
+
+            foreach (var item in estoque.ListaMercadorias)
+            {
+                parameters.Add("@MercadoriaCodigo", item.Codigo, System.Data.DbType.Int32);
+                await connection.ExecuteAsync(sqlInsert, parameters);
+            }
         }
 
-        public Task Deletar(int codigo, CancellationToken ctx)
+        public async Task Deletar(int codigo, CancellationToken ctx)
         {
-            throw new NotImplementedException();
+            var sqlInsert =
+              $@"DELETE FROM Estoque
+				 WHERE codigo = @{nameof(codigo)}";
+
+            using var connection = SqlServerDbContext.GetConnection();
+
+            await connection.ExecuteAsync(sqlInsert, new { codigo });
         }
 
-        public Task AtualizaQuantidadeMercadoria(Estoque estoque, CancellationToken ctx)
+        private List<Estoque> ConverterSelectToEstoque(IEnumerable<dynamic> listaDinamica)
         {
-            throw new NotImplementedException();
+            var listaMercadorias = new List<Mercadoria>();
+            var lista = new List<Estoque>();
+
+            foreach (var item in listaDinamica.ToList())
+            {
+                listaMercadorias.Add(new Mercadoria() { Codigo = item.MercadoriaCodigo });
+                lista.Add(new Estoque(item.codigo, item.DepositoCodigo, listaMercadorias));
+            }
+
+            return lista;
         }
     }
 }
