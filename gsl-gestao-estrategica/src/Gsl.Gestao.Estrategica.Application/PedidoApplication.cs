@@ -131,6 +131,8 @@ namespace Gsl.Gestao.Estrategica.Application
                     }
                 }
 
+                pedido.Id = pedidoAntigo.Id;
+
                 foreach (var item in pedido.ItensPedido)
                 {
                     var mercadoriaOutput = await _gslInfoCadastraisGateway.ObterMercadoria(item.MercadoriaCodigo, ctx);
@@ -142,7 +144,7 @@ namespace Gsl.Gestao.Estrategica.Application
                         
                     if (mercadoriaOutput.Quantidade >= item.MercadoriaQuantidade)
                     {
-                        item.MercadoriaQuantidade -= item.MercadoriaQuantidade;
+                        mercadoriaOutput.Quantidade -= item.MercadoriaQuantidade;
                         await _gslInfoCadastraisGateway.AtualizarMercadoria(mercadoriaOutput, ctx);
                     }
                     else
@@ -151,7 +153,7 @@ namespace Gsl.Gestao.Estrategica.Application
                         pedido.AddNotification(nameof(Pedido), erroMsg);
                     }
 
-                    item.Valor = mercadoriaOutput.Valor * Convert.ToDouble(mercadoriaOutput.Quantidade);
+                    item.Valor = mercadoriaOutput.Valor * Convert.ToDouble(item.MercadoriaQuantidade);
                 }
             }
 

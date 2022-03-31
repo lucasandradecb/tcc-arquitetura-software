@@ -49,6 +49,10 @@ namespace Gsl.Gestao.Estrategica.Domain.Entities
         /// <summary>
         /// Data de criação do registro
         /// </summary>
-        public DateTime DataCriacao { get; set; }        
+        public DateTime DataCriacao { get; set; }
+        /// <summary>
+        /// Id do pedido
+        /// </summary>
+        public Guid PedidoId { get; set; }
     }
 }

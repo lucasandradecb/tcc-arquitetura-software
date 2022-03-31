@@ -65,5 +65,19 @@ namespace Gsl.Gestao.Estrategica.Domain.Repositories
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task DeletarItem(int codigo, CancellationToken ctx);
+        /// <summary>
+        /// Atualiza um item do pedido
+        /// </summary>
+        /// <param name="itemPedido"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task AtualizarItem(ItemPedido itemPedido, CancellationToken ctx);
+        /// <summary>
+        /// Obtem o item pelo codigo
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<ItemPedido> ObterItemPorCodigo(int codigo, CancellationToken ctx);
     }
 }
