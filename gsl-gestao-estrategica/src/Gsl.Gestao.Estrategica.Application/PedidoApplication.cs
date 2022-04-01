@@ -93,6 +93,38 @@ namespace Gsl.Gestao.Estrategica.Application
         {
             var pedido = _mapper.Map<PedidoModel, Pedido>(pedidoModel);
 
+            if (pedido.Valid)
+            {
+                foreach (var item in pedido.ItensPedido)
+                {
+                    var mercadoriaOutput = await _gslInfoCadastraisGateway.ObterMercadoria(item.MercadoriaCodigo, ctx);
+                    if (mercadoriaOutput.Valid)
+                    {
+                        if (mercadoriaOutput.Quantidade >= item.MercadoriaQuantidade)
+                        {
+                            mercadoriaOutput.Quantidade -= item.MercadoriaQuantidade;
+                            await _gslInfoCadastraisGateway.AtualizarMercadoria(mercadoriaOutput, ctx);
+                        }
+                        else
+                        {
+                            var erroMsg = string.Format(MensagensInfo.Mercadoria_MaxQuantidade, mercadoriaOutput.Nome, mercadoriaOutput.Quantidade);
+                            pedido.AddNotification(nameof(Pedido), erroMsg);
+                        }
+
+                        item.Valor = mercadoriaOutput.Valor * Convert.ToDouble(item.MercadoriaQuantidade);                        
+                    }
+                    else
+                    {
+                        pedido.AddNotification(nameof(Pedido), MensagensInfo.Mercadoria_NaoEncontrada);
+                    }                    
+                }
+            }
+
+            pedido.ValorTotal = pedido.ItensPedido.Sum(x => x.Valor);
+
+            if (pedido.Invalid)
+                return Result<Pedido>.Error(pedido.Notifications);
+
             await _pedidoRepository.Salvar(pedido, ctx);
             return Result<Pedido>.Ok(pedido);
         }

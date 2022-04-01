@@ -6,7 +6,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
-using Gsl.Gestao.Estrategica.Domain.ValueObjects;
 
 namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
 {
@@ -231,18 +230,33 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
         }
 
         private List<Pedido> ConverterSelectToPedido(IEnumerable<dynamic> listaDinamica)
-        {
-            var listaItems = new List<ItemPedido>();
+        {            
             var lista = new List<Pedido>();
 
-            foreach (var item in listaDinamica.ToList())
-            {
-                listaItems.Add(new ItemPedido(item.ItemCodigo, item.mercadoriacodigo, item.mercadoriaquantidade, Convert.ToDouble(item.valor)));
+             var results = listaDinamica
+            .GroupBy(p => p.PedidoIdentificador)
+            .Where(x => x.Count() > 1)
+            .Select(x => new List<dynamic>(x)).ToList();
 
-                var pedido = new Pedido(item.ItemCodigo, item.clientecpf, Convert.ToDouble(item.valortotal), listaItems);
-                pedido.Id = item.PedidoIdentificador;
+            foreach (var itemGroup in results)
+            {
+                var pedido = new Pedido();
+                var listaItems = new List<ItemPedido>();
+                foreach (var item in itemGroup.ToList())
+                {
+                    listaItems.Add(new ItemPedido(item.ItemCodigo, item.mercadoriacodigo, item.mercadoriaquantidade, Convert.ToDouble(item.valor)));
+                                       
+                    pedido.Id = item.PedidoIdentificador;
+                    pedido.Codigo = item.ItemCodigo;
+                    pedido.ClienteCpf = item.clientecpf;
+                    pedido.ValorTotal = Convert.ToDouble(item.valortotal);
+                    pedido.ItensPedido = listaItems;
+                }
+
                 lista.Add(pedido);
             }
+
+            
 
             return lista;
         }
