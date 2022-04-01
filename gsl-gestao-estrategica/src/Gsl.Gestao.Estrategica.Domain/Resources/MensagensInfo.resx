@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cliente_CpfExistente" xml:space="preserve">
-    <value>OPS!!! Já existe um cliente cadastrado com o CPF informado.</value>
-  </data>
-  <data name="Cliente_ErroDeletar" xml:space="preserve">
-    <value>Erro ao deletar cliente com o CPF informado!</value>
-  </data>
-  <data name="Cliente_NaoEncontrado" xml:space="preserve">
-    <value>Não foi encontrado cliente com o CPF informado!</value>
-  </data>
   <data name="Entrega_CodigoExistente" xml:space="preserve">
     <value>Já existe uma entrega cadastrada com o código informado.</value>
   </data>

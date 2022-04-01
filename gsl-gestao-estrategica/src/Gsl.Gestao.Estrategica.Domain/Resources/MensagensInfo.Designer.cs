@@ -61,33 +61,6 @@ namespace Gsl.Gestao.Estrategica.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPS!!! Já existe um cliente cadastrado com o CPF informado..
-        /// </summary>
-        public static string Cliente_CpfExistente {
-            get {
-                return ResourceManager.GetString("Cliente_CpfExistente", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erro ao deletar cliente com o CPF informado!.
-        /// </summary>
-        public static string Cliente_ErroDeletar {
-            get {
-                return ResourceManager.GetString("Cliente_ErroDeletar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Não foi encontrado cliente com o CPF informado!.
-        /// </summary>
-        public static string Cliente_NaoEncontrado {
-            get {
-                return ResourceManager.GetString("Cliente_NaoEncontrado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Já existe uma entrega cadastrada com o código informado..
         /// </summary>
         public static string Entrega_CodigoExistente {

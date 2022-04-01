@@ -19,7 +19,6 @@ namespace Gsl.Gestao.Estrategica.Infrastructure
         /// </summary>
         public static IServiceCollection AddInfraServices(this IServiceCollection services)
         {
-            services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IEstoqueRepository, EstoqueRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IEntregaRepository, EntregaRepository>();

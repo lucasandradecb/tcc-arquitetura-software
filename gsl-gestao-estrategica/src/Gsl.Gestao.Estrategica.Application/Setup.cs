@@ -13,7 +13,6 @@ namespace Gsl.Gestao.Estrategica.Application
         /// </summary>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IClienteApplication, ClienteApplication>();
             services.AddScoped<IEstoqueApplication, EstoqueApplication>();
             services.AddScoped<IPedidoApplication, PedidoApplication>();
             services.AddScoped<IEntregaApplication, EntregaApplication>();
