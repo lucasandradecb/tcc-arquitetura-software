@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Gsl.Gestao.Estrategica.Application.Models
 {
@@ -15,6 +16,10 @@ namespace Gsl.Gestao.Estrategica.Application.Models
             ItensPedido = new List<ItemPedidoModel>();
         }
 
+        /// <summary>
+        /// Id do pedido
+        /// </summary>
+        public Guid Id { get; set; }
         /// <summary>
         /// Codigo do pedido
         /// </summary>

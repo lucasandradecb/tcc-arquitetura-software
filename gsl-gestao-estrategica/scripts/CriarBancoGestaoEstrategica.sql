@@ -30,7 +30,7 @@ CREATE TABLE ItemPedido (id UNIQUEIDENTIFIER NOT NULL,
 						 FOREIGN KEY (pedidoid) REFERENCES Pedido(id))
 						 
 CREATE TABLE Entrega (id UNIQUEIDENTIFIER NOT NULL, 
-                         codigo INT, 						 
+                         codigo NVARCHAR(20), 						 
 						 pedidoid UNIQUEIDENTIFIER, 
 						 latitude DECIMAL(18,5), 
 						 longitude DECIMAL(18,5), 

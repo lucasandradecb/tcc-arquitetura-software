@@ -1,4 +1,5 @@
 ﻿using Gsl.Gestao.Estrategica.Domain.Enums;
+using System;
 
 namespace Gsl.Gestao.Estrategica.Application.Models
 {
@@ -12,9 +13,9 @@ namespace Gsl.Gestao.Estrategica.Application.Models
         /// </summary>
         public string Codigo { get; set; }
         /// <summary>
-        /// Codigo do pedido
+        /// Id do pedido
         /// </summary>
-        public int PedidoCodigo { get; set; }
+        public Guid PedidoId { get; set; }
         /// <summary>
         /// Latitude de localização da entrega
         /// </summary>

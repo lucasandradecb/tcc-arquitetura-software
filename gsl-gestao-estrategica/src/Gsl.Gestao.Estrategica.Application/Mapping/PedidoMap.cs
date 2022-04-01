@@ -15,6 +15,7 @@ namespace Gsl.Gestao.Estrategica.Application.Mapping
         public PedidoMap()
         {
             CreateMap<Pedido, PedidoModel>()
+                .ForMember(dest => dest.Id, m => m.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Codigo, m => m.MapFrom(src => src.Codigo))
                 .ForMember(dest => dest.ClienteCpf, m => m.MapFrom(src => src.ClienteCpf))                
                 .ForMember(dest => dest.ItensPedido, m => m.MapFrom(src => src.ItensPedido))

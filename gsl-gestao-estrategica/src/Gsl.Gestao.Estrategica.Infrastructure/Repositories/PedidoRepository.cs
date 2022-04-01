@@ -59,7 +59,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
         {
             var sqlInsert =
                 $@"SELECT 
-                      Pedido.Id AS PedidoIdentificador,
+                      Pedido.Id AS Id,
                       Pedido.codigo AS PedidoCodigo,
                       Pedido.clientecpf,
                       Pedido.valortotal,
@@ -82,7 +82,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
         {
             var sqlInsert =
                  $@"SELECT 
-                      Pedido.Id AS PedidoIdentificador,
+                      Pedido.Id AS Id,
                 	  Pedido.codigo AS PedidoCodigo,
                       Pedido.clientecpf,
                       Pedido.valortotal,
@@ -234,7 +234,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
             var lista = new List<Pedido>();
 
              var results = listaDinamica
-            .GroupBy(p => p.PedidoIdentificador)
+            .GroupBy(p => p.Id)
             .Where(x => x.Count() > 1)
             .Select(x => new List<dynamic>(x)).ToList();
 
@@ -246,7 +246,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
                 {
                     listaItems.Add(new ItemPedido(item.ItemCodigo, item.mercadoriacodigo, item.mercadoriaquantidade, Convert.ToDouble(item.valor)));
                                        
-                    pedido.Id = item.PedidoIdentificador;
+                    pedido.Id = item.Id;
                     pedido.Codigo = item.ItemCodigo;
                     pedido.ClienteCpf = item.clientecpf;
                     pedido.ValorTotal = Convert.ToDouble(item.valortotal);

@@ -21,11 +21,8 @@ namespace Gsl.Gestao.Estrategica.Application.Mapping
                 .ForMember(dest => dest.LatitudeEntrega, m => m.MapFrom(src => src.LatitudeEntrega))  
                 .ForMember(dest => dest.LongitudeEntrega, m => m.MapFrom(src => src.LongitudeEntrega))
                 .ForMember(dest => dest.StatusEntrega, m => m.MapFrom(src => src.StatusEntrega))
+                .ForMember(dest => dest.PedidoId, m => m.MapFrom(src => src.PedidoId))
                 .ReverseMap();
-
-            CreateMap<Pedido, EntregaModel>()
-                .ForMember(dest => dest.PedidoCodigo, m => m.MapFrom(src => src.Codigo));
-
         }
     }
 }

@@ -91,8 +91,6 @@ namespace Gsl.Gestao.Estrategica.Application
 
             if (entrega.Valid)
             {
-                var pedido = await _pedidoRepository.ObterPorCodigo(entregaModel.PedidoCodigo, ctx);
-                entrega.PedidoId = pedido.Id;
                 entrega.StatusEntrega = EStatusEntrega.EmAndamento;
 
                 if (!await _entregaRepository.VerificarSeExiste(entrega, ctx))
