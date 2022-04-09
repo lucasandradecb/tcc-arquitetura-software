@@ -39,8 +39,10 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
 
             using var connection = SqlServerDbContext.GetConnection();
 
+            var pedidoId = Guid.NewGuid();
+
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", pedido.Id, System.Data.DbType.Guid);
+            parameters.Add("@Id", pedidoId, System.Data.DbType.Guid);
             parameters.Add("@Codigo", pedido.Codigo, System.Data.DbType.Int32);
             parameters.Add("@ClienteCpf", pedido.ClienteCpf, System.Data.DbType.AnsiString);
             parameters.Add("@ValorTotal", pedido.ValorTotal, System.Data.DbType.Double);
@@ -50,7 +52,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
 
             foreach (var item in pedido.ItensPedido)
             {
-                item.PedidoId = pedido.Id;
+                item.PedidoId = pedidoId;
                 await SalvarItem(item, ctx);
             }
         }
@@ -59,7 +61,7 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
         {
             var sqlInsert =
                 $@"SELECT 
-                      Pedido.Id AS Id,
+                      Pedido.id AS Id,
                       Pedido.codigo AS PedidoCodigo,
                       Pedido.clientecpf,
                       Pedido.valortotal,
