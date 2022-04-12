@@ -243,13 +243,13 @@ namespace Gsl.Gestao.Estrategica.Infrastructure.Repositories
             foreach (var itemGroup in results)
             {
                 var pedido = new Pedido();
+                pedido.Codigo = itemGroup.FirstOrDefault().PedidoCodigo;
                 var listaItems = new List<ItemPedido>();
                 foreach (var item in itemGroup.ToList())
                 {
                     listaItems.Add(new ItemPedido(item.ItemCodigo, item.mercadoriacodigo, item.mercadoriaquantidade, Convert.ToDouble(item.valor)));
                                        
                     pedido.Id = item.Id;
-                    pedido.Codigo = item.ItemCodigo;
                     pedido.ClienteCpf = item.clientecpf;
                     pedido.ValorTotal = Convert.ToDouble(item.valortotal);
                     pedido.ItensPedido = listaItems;
