@@ -1,6 +1,7 @@
 CREATE DATABASE db_gestao_estrategica
-
+GO
 USE db_gestao_estrategica
+GO
 
 CREATE TABLE Estoque (id UNIQUEIDENTIFIER NOT NULL, 
                          codigo INT, 

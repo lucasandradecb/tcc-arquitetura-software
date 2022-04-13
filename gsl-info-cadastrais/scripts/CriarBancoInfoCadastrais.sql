@@ -1,6 +1,7 @@
 CREATE DATABASE db_info_cadastrais
-
+GO
 USE db_info_cadastrais
+GO
 
 CREATE TABLE Fornecedor (id UNIQUEIDENTIFIER NOT NULL,
 						cnpj NVARCHAR(30),
